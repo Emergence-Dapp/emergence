@@ -12,7 +12,7 @@ import VideoTile from "./VideoTile";
 import VideoSpaces from "./VideoSpaces";
 import ScreenShare from "./ScreenShare";
 
-function Room() {
+function Room({roomId}) {
   const localPeer = useHMSStore(selectLocalPeer);
   const stage = localPeer.roleName === "stage";
   const viewer = localPeer.roleName === "viewer";
@@ -20,11 +20,14 @@ function Room() {
   const hmsActions = useHMSActions();
   const allMessages = useHMSStore(selectHMSMessages); // get all messages
   // hmsActions.sendBroadcastMessage("hello"); // send a message
+
+  console.log(roomId);
   const [inputValues, setInputValues] = React.useState("");
   const [visible, isVisible] = React.useState(false);
   const handleInputChange = (e) => {
     setInputValues(e.target.value);
   };
+
 
   const sendMessage = () => {
     hmsActions.sendBroadcastMessage(inputValues);
