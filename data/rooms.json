@@ -9,7 +9,7 @@
     },
     {
         "id": "1004",
-        "joinable": true,
+        "joinable": false,
         "status": "Busy",
         "purpose": "1:1 Onboarding",
         "host": "Priscilla",
@@ -41,8 +41,8 @@
     },
     {
         "id": "1015",
-        "joinable": true,
-        "status": "Available",
+        "joinable": false,
+        "status": "Full",
         "purpose": "1:1 Onboarding",
         "host": "Sarah",
         "duration": "30 min"

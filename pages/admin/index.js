@@ -1,7 +1,8 @@
 import { Header } from "../../components/Header";
-import {axios} from "axios";
+import axios from 'axios';
 
-// const axios = require("axios");
+let transcriptId;
+let status;
   
 const assembly = axios.create({
     baseURL: "https://api.assemblyai.com/v2",
@@ -10,16 +11,42 @@ const assembly = axios.create({
         "content-type": "application/json",
     },
 });
-assembly
+
+function getTranscriptResult() {
+    assembly
+    .get(`/transcript/${transcriptId}`)
+    .then((res) => {
+        console.log(res.data);
+        status = res.data.status;
+    })
+    .catch((err) => console.error(err));
+    if(status !== 'completed') {
+        setTimeout(getTranscriptResult, 5000);        
+    }
+}
+
+function postTranscriptForProcessing() {
+    assembly
     .post("/transcript", {
         audio_url: "https://bit.ly/3yxKEIY"
     })
-    .then((res) => console.log(res.data))
+    .then((res) => {
+        console.log(res.data);
+        transcriptId = res.data.id;
+        status = res.data.status;
+    })
     .catch((err) => console.error(err));
+    if(status !== 'completed') {
+        setTimeout(getTranscriptResult, 5000);        
+    }
+}
 
+postTranscriptForProcessing();
 
 export default function AdminPage() {
   return (
-    <div>{ res }</div>
+    <div>
+        <a className="btn-primary">Proceess Transcript</a>
+    </div>
     );
 }
