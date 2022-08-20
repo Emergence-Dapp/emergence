@@ -1,5 +1,4 @@
 const hre = require("hardhat");
-const SuperTokenArtifact = require("../artifacts/contracts/EmerToken.sol/EmerToken.json").abi;
 require("dotenv").config();
 
 // run: npx hardhat run scripts/mintNapproveToken.js --network matic

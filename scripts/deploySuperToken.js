@@ -1,7 +1,7 @@
 const hre = require("hardhat");
 require("dotenv").config();
 
-//3) run: npx hardhat run scripts/deploySuperToken.js --network matic
+// run: npx hardhat run scripts/deploySuperToken.js --network matic
 async function main() {
   const SuperToken = await hre.ethers.getContractFactory("EmerToken");
   const superToken = await SuperToken.deploy();
