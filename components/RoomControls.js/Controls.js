@@ -18,6 +18,7 @@ import { Group } from "@semaphore-protocol/group";
 const { generateProof } =require("@semaphore-protocol/proof");
 const { verifyProof } = require("@semaphore-protocol/proof");
 const { packToSolidityProof } = require("@semaphore-protocol/proof");
+import 'dotenv/config'
 
 
 
@@ -35,13 +36,13 @@ function Controls({ switches }) {
   const [externalNullifier,setExternalNullifier] = useState();
   const [signal,setSignal] = useState();
 
-  const TEST_NET_PRIVATE_KEY = process.env.NEXT_TEST_PRIVATE_KEY;
+  const TEST_NET_PRIVATE_KEY = process.env.NEXT_PUBLIC_TEST_PRIVATE_KEY;
   console.log(TEST_NET_PRIVATE_KEY);
   console.log(process.env);
   const SemaphoreABI = Semaphore.abi;
   const SempahoreAddress ="0x7a9aBb8C43916a9Ddcf9307e0664aC37A822a0Aa";
-  const provider = new ethers.providers.JsonRpcProvider("https://eth-goerli.g.https://polygon-mumbai.g.alchemy.com/v2/0aWYomtIkhZ7DpFAZtNasdu74nL_ZlMf.com/v2/HTnCRg0KxPt5aG7FCaMePEWGK1nRegjD");
-  const signer = new ethers.Wallet("TEST_NET_PRIVATE_KEY").connect(provider);
+  const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.g.alchemy.com/v2/0aWYomtIkhZ7DpFAZtNasdu74nL_ZlMf");
+  const signer = new ethers.Wallet(TEST_NET_PRIVATE_KEY).connect(provider);
 
   const semaphoreContract = new ethers.Contract(SempahoreAddress,SemaphoreABI,signer);
 
