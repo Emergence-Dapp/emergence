@@ -36,6 +36,15 @@ contract SFRouter {
     daoMembers[_account] = true;
   }
 
+  function addAccounts(address[] memory _accounts) external {
+    require(msg.sender == owner, "only owner can add accounts");
+    uint i = 0;
+    while (i < _accounts.length) {
+      daoMembers[_account[i]] = true;
+      i++;
+    }  
+  }
+
   function removeAccount(address _account) external {
     require(msg.sender == owner, "only owner can remove accounts");
     daoMembers[_account] = false;
