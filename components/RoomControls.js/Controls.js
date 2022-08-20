@@ -1,4 +1,5 @@
 import React from "react";
+import {useState} from "react";
 import {
   useHMSActions,
   useHMSStore,
@@ -9,11 +10,16 @@ import {
   selectPermissions,
   selectIsLocalScreenShared,
 } from "@100mslive/react-sdk";
-import { Identity } from "@semaphore-protocol/identity"
-import { Group } from "@semaphore-protocol/group"
-const { generateProof } =require("@semaphore-protocol/proof")
-const { verifyProof } = require("@semaphore-protocol/proof")
+
+import {ethers} from "ethers"; 
+import Semaphore from "../../pages/utils/Semaphore.json";
+import { Identity } from "@semaphore-protocol/identity";
+import { Group } from "@semaphore-protocol/group";
+const { generateProof } =require("@semaphore-protocol/proof");
+const { verifyProof } = require("@semaphore-protocol/proof");
 const { packToSolidityProof } = require("@semaphore-protocol/proof");
+import 'dotenv/config'
+
 
 
 function Controls({ switches }) {
@@ -25,6 +31,21 @@ function Controls({ switches }) {
   const isLocalVideoEnabled = useHMSStore(selectIsLocalVideoEnabled);
   const isLocalScreenShared = useHMSStore(selectIsLocalScreenShared);
   let toggler = false;
+
+  const [proof,setProof] = useState();
+  const [externalNullifier,setExternalNullifier] = useState();
+  const [signal,setSignal] = useState();
+
+  const TEST_NET_PRIVATE_KEY = process.env.NEXT_PUBLIC_TEST_PRIVATE_KEY;
+  console.log(TEST_NET_PRIVATE_KEY);
+  console.log(process.env);
+  const SemaphoreABI = Semaphore.abi;
+  const SempahoreAddress ="0x7a9aBb8C43916a9Ddcf9307e0664aC37A822a0Aa";
+  const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.g.alchemy.com/v2/0aWYomtIkhZ7DpFAZtNasdu74nL_ZlMf");
+  const signer = new ethers.Wallet(TEST_NET_PRIVATE_KEY).connect(provider);
+
+  const semaphoreContract = new ethers.Contract(SempahoreAddress,SemaphoreABI,signer);
+
 
   const SwitchAudio = async () => {
     //toggle audio enabled
@@ -58,12 +79,14 @@ function Controls({ switches }) {
   //   }
   // };
 
-  async function generateNewId(){
+  async function onHandleGenerateProof(){
     //Connect to Identity
-    const newIdentity = new Identity()
+    const newIdentity = new Identity("signal message");
     const newTrapdoor = newIdentity.getTrapdoor();
     const newNullifier = newIdentity.getNullifier();
     const newIdentityCommitment = newIdentity.generateCommitment();
+    console.log(newIdentity);
+    console.log(newIdentityCommitment);
 
     //Generate Group
     const group = new Group();
@@ -71,14 +94,14 @@ function Controls({ switches }) {
 
     //Generate Proof
 
-    const externalNullifier = group.root
+    const localExternalNullifier = group.root
     const signal = "proposal_1"
 
-    const fullProof = await generateProof(newIdentity, group, externalNullifier, signal, {
+    const fullProof = await generateProof(newIdentity, group, localExternalNullifier, signal, {
         zkeyFilePath: "https://www.trusted-setup-pse.org/semaphore/20/semaphore.zkey",
         wasmFilePath: "https://www.trusted-setup-pse.org/semaphore/20/semaphore.wasm"
     })
-    //Fetch Verification Key
+    // Fetch Verification Key
     const verificationKey = await fetch("https://www.trusted-setup-pse.org/semaphore/20/semaphore.json").then(function(res) {
       return res.json();
     });
@@ -93,6 +116,23 @@ function Controls({ switches }) {
 
 
 
+  }
+
+  async function onHandleCreateGroup(){
+    console.log("Create Group");
+    const groupId2 = 999
+    const createGroup = await semaphoreContract.createGroup(groupId2,20,0,admin);
+    let tx1 = await createGroup.wait()
+    console.log(identityCommitment);
+
+    const addMember = await semaphoreContract.addMember(groupId2,identityCommitment);
+    tx1 = await addMember.wait()
+  }
+
+  async function onHandleAddMember(){
+    console.log("Add Member")
+    const addMember = await semaphoreContract.addMember(groupId2,identityCommitment);
+    tx1 = await addMember.wait()
   }
 
   return (
@@ -123,7 +163,7 @@ function Controls({ switches }) {
           </button>
           <button
           className=" uppercase px-5 py-2 hover:bg-blue-600"
-          onClick={generateNewId}
+          onClick={onHandleGenerateProof}
         >
           Generate Proof
         </button>
@@ -131,7 +171,19 @@ function Controls({ switches }) {
             className=" uppercase px-5 py-2 hover:bg-blue-600"
             onClick={ExitRoom}
           >
-            Verify Proof
+            StartRoom
+          </button>
+          <button
+            className=" uppercase px-5 py-2 hover:bg-blue-600"
+            onClick={onHandleCreateGroup}
+          >
+            Create Group
+          </button>
+          <button
+            className=" uppercase px-5 py-2 hover:bg-blue-600"
+            onClick={onHandleAddMember}
+          >
+            AddMember
           </button>
     </div>
   );

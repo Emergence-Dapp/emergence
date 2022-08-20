@@ -7,7 +7,7 @@ import { Identity } from "@semaphore-protocol/identity"
 function Login() {
 
   function generateNewId(){
-    const newIdentity = new Identity()
+    const newIdentity = new Identity("secret-message");
     const newTrapdoor = newIdentity.getTrapdoor();
     const newNullifier = newIdentity.getNullifier();
     const newIdentityCommitment = newIdentity.generateCommitment();
@@ -140,7 +140,7 @@ function Login() {
           className="flex-1 text-white bg-blue-600 py-3 px-10 rounded-md"
           onClick={generateNewId}
         >
-          Create Idendity
+          Generate Id
         </button>
 
 
