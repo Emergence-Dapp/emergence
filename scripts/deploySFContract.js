@@ -7,6 +7,7 @@ const owner = process.env.PUB_KEY;
 // run: npx hardhat run scripts/deploySFContract.js --network matic
 async function main() {
   const provider = new hre.ethers.providers.JsonRpcProvider(process.env.MATIC_URL);
+  const semaphorAddr = "0x7a9aBb8C43916a9Ddcf9307e0664aC37A822a0Aa";
 
   const sf = await Framework.create({
     chainId: (await provider.getNetwork()).chainId,
@@ -16,7 +17,7 @@ async function main() {
   });
 
   const Router = await hre.ethers.getContractFactory("SFRouter");
-  const sfRouter = await Router.deploy(sf.settings.config.hostAddress, owner);
+  const sfRouter = await Router.deploy(sf.settings.config.hostAddress, owner, semaphorAddr);
 
   await sfRouter.deployed();
 
