@@ -3,7 +3,7 @@ import { RoomCard } from "../../components/RoomCard";
 import roomData from '../../data/rooms.json';
 import { useRouter } from 'next/router'
 
-export default function RoomPage() {
+export default function RoomListPage() {
 
     const router = useRouter()
     const { daoId } = router.query
