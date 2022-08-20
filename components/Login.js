@@ -4,29 +4,14 @@ import Room from "./Room";
 import { Identity } from "@semaphore-protocol/identity"
 
 
-function Login() {
+function Login({roomId}) {
 
-  function generateNewId(){
-    const newIdentity = new Identity("secret-message");
-    const newTrapdoor = newIdentity.getTrapdoor();
-    const newNullifier = newIdentity.getNullifier();
-    const newIdentityCommitment = newIdentity.generateCommitment();
-
-
-    console.log(newIdentity);
-    console.log(newTrapdoor);
-    console.log(newNullifier);
-    console.log(newIdentityCommitment);
-
-
-  }
-  
+  const roomKeys = ["62f64a58b1e780e78c3b3fac","63004db6b1e780e78c3bc4ff"];
 
   const endpoint = "https://prod-in2.100ms.live/hmsapi/videodemo.app.100ms.live/";
   
   const hmsActions = useHMSActions();
   const [inputValues, setInputValues] = useState("");
-  const [selectValues, setSelectValues] = useState("stage");
   const isConnected = useHMSStore(selectIsConnectedToRoom)
 
 
@@ -39,12 +24,9 @@ function Login() {
   const handleInputChange = (e) => {
     setInputValues(e.target.value);
   };
-  const handleSelect = (e) => {
-    setSelectValues(e.target.value);
-  };
 
   const handleSubmit = async (e) => {
-    const room1Id = "62f64a58b1e780e78c3b3fac"
+    console.log(roomKeys[roomId-1]);
     e.preventDefault();
     //1.Fetch the Token Function
     const fetchtoken = async () => {
@@ -52,9 +34,9 @@ function Login() {
         method: "POST",
         body: JSON.stringify({
           user_id: "62f6449dc166400656971829",
-          role: "stage", //stage or viewers
+          role: "stage", 
           type: "app",
-          room_id: room1Id,
+          room_id: roomKeys[roomId-1],
         }),
       });
       const { token } = await response.json();
@@ -64,8 +46,7 @@ function Login() {
     //2.Get the token
 
     const token = await fetchtoken()
-    // console.log(inputValues)
-    // console.log(selectValues)
+
     
     //3.Connects to the Room with Token
     hmsActions.join({
@@ -77,39 +58,6 @@ function Login() {
     });
   };
 
-  const handleSubmit2 = async (e) => {
-    e.preventDefault();
-    const room2Id="63004db6b1e780e78c3bc4ff"
-    //1.Fetch the Token Function
-    const fetchtoken = async () => {
-      const response = await fetch(`${endpoint}api/token`, {
-        method: "POST",
-        body: JSON.stringify({
-          user_id: "62f6449dc166400656971829",
-          role: "stage", //stage or viewers
-          type: "app",
-          room_id: room2Id,
-        }),
-      });
-      const { token } = await response.json();
-      return token;
-    };
-
-    //2.Get the token
-
-    const token = await fetchtoken()
-    // console.log(inputValues)
-    // console.log(selectValues)
-    
-    //3.Connects to the Room with Token
-    hmsActions.join({
-      userName: inputValues,
-      authToken: token,
-      settings: {
-        isAudioMuted: true,
-      },
-    });
-  };
 
   return (
     <>
@@ -128,26 +76,12 @@ function Login() {
           className="flex-1 text-white bg-blue-600 py-3 px-10 rounded-md"
           onClick={handleSubmit}
         >
-          Join Room 1
+          Join Room
         </button>
-        <button
-          className="flex-1 text-white bg-blue-600 py-3 px-10 rounded-md"
-          onClick={handleSubmit2}
-        >
-          Join Room 2
-        </button>
-        <button
-          className="flex-1 text-white bg-blue-600 py-3 px-10 rounded-md"
-          onClick={generateNewId}
-        >
-          Generate Id
-        </button>
-
-
       </div>
     </div>
     ):(
-    <Room/>
+    <Room roomId={roomId}/>
     )}
     </>
   );
