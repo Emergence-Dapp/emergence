@@ -34,18 +34,18 @@ function Room() {
   const setVisibility =(dat)=>{
     isVisible(dat)
   }
-  let colsNumber=0;
-  if(peers.length >= 2){
-    colsNumber = 2
-  } else {
-    colsNumber =1
-  }
+  // let colsNumber=0;
+  // if(peers.length > 1){
+  //   colsNumber = 2
+  // } else {
+  //   colsNumber =1
+  // }
  
   return (
     <div className=" relative h-screen flex justify-center items-center px-12 bg-slate-800 flex-row gap-8 overflow-hidden">
       <div className=" bg-slate-600 shadow-md w-3/5 rounded-2xl">
         <span className="flex flex-col w-full h-full">
-          <div className={`grid grid-cols-${colsNumber} justify-center items-center rounded-2xl`}>
+          <div className={`flex justify-center items-center rounded-2xl`}>
             {peers
                   .map((peer) => {
                     return (
