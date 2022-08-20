@@ -32,14 +32,23 @@ function Controls({ switches }) {
   const isLocalScreenShared = useHMSStore(selectIsLocalScreenShared);
   let toggler = false;
 
-  const [proof,setProof] = useState();
-  const [externalNullifier,setExternalNullifier] = useState();
+  const [globalSolidityProof,setGlobalSolidityProof] = useState();
+  const [globalExternalNullifier,setGlobalExternalNullifier] = useState();
+  const [globalNullifierHash,setGlobalNullifierHash] = useState();
   // const [signal,setSignal] = useState();
   const [identityCommitment,setIdentityCommitment] = useState();
+  const [videoRoomId,setVideoRoomId] = useState();
+
+  //setSignalBytes32 set signal?
+ 
+
+
 
   const TEST_NET_PRIVATE_KEY = process.env.NEXT_PUBLIC_TEST_PRIVATE_KEY;
   console.log(TEST_NET_PRIVATE_KEY);
   console.log(process.env);
+
+  //1.change this for ConnectWallet
   const SemaphoreABI = Semaphore.abi;
   const SempahoreAddress ="0x7a9aBb8C43916a9Ddcf9307e0664aC37A822a0Aa";
   const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.g.alchemy.com/v2/0aWYomtIkhZ7DpFAZtNasdu74nL_ZlMf");
@@ -51,6 +60,7 @@ function Controls({ switches }) {
   const signalBytes32 = ethers.utils.formatBytes32String(signal);
   //2.Have the ExternalNullifier as the roomId
 
+  //3.Sign Message
 
 
   const semaphoreContract = new ethers.Contract(SempahoreAddress,SemaphoreABI,signer);
@@ -60,10 +70,7 @@ function Controls({ switches }) {
     //toggle audio enabled
     await hmsActions.setLocalAudioEnabled(!isLocalAudioEnabled);
   };
-  const ScreenShare = async () => {
-    //toggle screenshare enabled
-    await hmsActions.setScreenShareEnabled(!isLocalScreenShared);
-  };
+
   const SwitchVideo = async () => {
     //toggle video enabled
     await hmsActions.setLocalVideoEnabled(!isLocalVideoEnabled);
@@ -71,7 +78,6 @@ function Controls({ switches }) {
 
   const ExitRoom = () => {
     hmsActions.leave();
-    //exit a room
   };
 
   const permissions = useHMSStore(selectPermissions);
@@ -88,15 +94,23 @@ function Controls({ switches }) {
   //   }
   // };
 
+  async function onHandleStartRoom(){
+    console.log("create Room");
+    //set VideoRoomId;
+    setVideoRoomId(10);
+    setGlobalExternalNullifier(10);
+    //Set room Id 
+  }
+
   async function onHandleGenerateProof(){
     //Connect to Identity
     const newIdentity = new Identity("signal message");
-    const newTrapdoor = newIdentity.getTrapdoor();
-    const newNullifier = newIdentity.getNullifier();
+    // const newTrapdoor = newIdentity.getTrapdoor();
+    // const newNullifier = newIdentity.getNullifier();
     const newIdentityCommitment = newIdentity.generateCommitment();
     console.log(newIdentity);
     console.log(newIdentityCommitment);
-    setIdentityCommitment(newIdentityCommitment);
+
 
     //Generate Group
     const group = new Group();
@@ -104,13 +118,16 @@ function Controls({ switches }) {
 
     //Generate Proof
 
-    const localExternalNullifier = group.root
+    const localExternalNullifier = videoRoomId;
     // const signal = "proposal_1"
 
     const fullProof = await generateProof(newIdentity, group, localExternalNullifier, signal, {
         zkeyFilePath: "https://www.trusted-setup-pse.org/semaphore/20/semaphore.zkey",
         wasmFilePath: "https://www.trusted-setup-pse.org/semaphore/20/semaphore.wasm"
     })
+    const { nullifierHash } = fullProof.publicSignals
+    const solidityProof = packToSolidityProof(fullProof.proof)
+
     // Fetch Verification Key
     const verificationKey = await fetch("https://www.trusted-setup-pse.org/semaphore/20/semaphore.json").then(function(res) {
       return res.json();
@@ -118,15 +135,26 @@ function Controls({ switches }) {
 
     //Verify Proof OffChain
     const res = await verifyProof(verificationKey, fullProof) // true or false.
-
-
-
     console.log(fullProof);
     console.log(res);
 
 
+    setGlobalSolidityProof(solidityProof)
+    setGlobalNullifierHash(nullifierHash)
 
   }
+
+
+  async function onHandleVerifyOnChain(){
+    console.log("On Chain Verification Tx");
+
+    const checkMembership = await semaphoreContract.verifyProof(999,signalBytes32,globalNullifierHash,globalExternalNullifier,globalSolidityProof,{gasLimit: 1500000});
+    console.log(checkMembership);
+    const tx = await checkMembership.wait();
+
+    console.log(tx);
+  }
+
 
   async function onHandleCreateGroup(){
     console.log("Create Group");
@@ -145,44 +173,6 @@ function Controls({ switches }) {
     console.log(identityCommitment);
     const addMember = await semaphoreContract.addMember(999,identityCommitment);
     tx1 = await addMember.wait()
-  }
-
-  async function onHandleVerifyOnChain(){
-    console.log("On Chain Verification Tx");
-    const groupId2 = 1000
-    const localExternalNullifier = 100002;
-    const newIdentity = new Identity("signal message");
-    const newIdentityCommitment = newIdentity.generateCommitment();
-
-    const group = new Group();
-    group.addMember(newIdentityCommitment);
-
-    
-   
-    console.log(group)
-    console.log("Group Root")
-    console.log(group.root)
-   
-
-    const fullProof = await generateProof(newIdentity, group, localExternalNullifier, signal, {
-      zkeyFilePath: "https://www.trusted-setup-pse.org/semaphore/20/semaphore.zkey",
-      wasmFilePath: "https://www.trusted-setup-pse.org/semaphore/20/semaphore.wasm"
-  })
-
-    const { nullifierHash } = fullProof.publicSignals
-    const solidityProof = packToSolidityProof(fullProof.proof)
-    console.log("Solidity Proof");
-    console.log(solidityProof);
-
-    console.log("signalBytes");
-    console.log(signalBytes32);
-
-
-
-    const checkMembership = await semaphoreContract.verifyProof(999,signalBytes32,nullifierHash,localExternalNullifier,solidityProof);
-    const tx = await checkMembership.wait();
-
-    console.log(tx);
   }
 
   return (
@@ -205,12 +195,7 @@ function Controls({ switches }) {
           >
             Exit Meeting
           </button>
-          <button
-            className=" uppercase px-5 py-2 hover:bg-blue-600"
-            onClick={ExitRoom}
-          >
-            Request Funds
-          </button>
+      
           <button
           className=" uppercase px-5 py-2 hover:bg-blue-600"
           onClick={onHandleGenerateProof}
@@ -219,11 +204,17 @@ function Controls({ switches }) {
         </button>
         <button
             className=" uppercase px-5 py-2 hover:bg-blue-600"
-            onClick={ExitRoom}
+            onClick={onHandleVerifyOnChain}
+          >
+            Request Funds
+          </button>
+        <button
+            className=" uppercase px-5 py-2 hover:bg-blue-600"
+            onClick={onHandleStartRoom}
           >
             StartRoom
           </button>
-          <button
+          {/* <button
             className=" uppercase px-5 py-2 hover:bg-blue-600"
             onClick={onHandleCreateGroup}
           >
@@ -234,13 +225,13 @@ function Controls({ switches }) {
             onClick={onHandleAddMember}
           >
             AddMember
-          </button>
-          <button
+          </button> */}
+          {/* <button
             className=" uppercase px-5 py-2 hover:bg-blue-600"
             onClick={onHandleVerifyOnChain}
           >
             Verify On Chain
-          </button>
+          </button> */}
     </div>
   );
 }
