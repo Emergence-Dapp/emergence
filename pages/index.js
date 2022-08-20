@@ -2,7 +2,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Login from "../components/Login";
 import { HMSRoomProvider } from "@100mslive/react-sdk";
-import { Header } from "./components/Header";
+import { Header } from "../components/Header";
 
 
 export default function Home() {
