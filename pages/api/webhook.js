@@ -7,10 +7,14 @@ export default function handler(req, res) {
   } = req
   
   if (method == 'POST') {
-    if (type === 'room.end.success') {
+    if (type == 'recording.success') {
       const videoUrl = data.URL;
-      console.log({ videoUrl });
-      console.log('room ended...');
+      console.log('recording.success');
+      console.log({ videoUrl, data });
+      return res.status(200).send('success');
+    } else if (type == 'recording.failed') {
+      console.log('recording.failes');
+      console.log({ data });
       return res.status(200).send('success');
     }
   }
