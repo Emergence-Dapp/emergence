@@ -44,17 +44,17 @@ export function ClientContextProvider({ children }) {
     setProvider(_provider);
 
     // Subscribe to accounts change
-    provider.on("accountsChanged", (accounts) => {
+    _provider.on("accountsChanged", (accounts) => {
       setAccounts(accounts);
     });
 
     // Subscribe to chainId change
-    provider.on("chainChanged", (chainId) => {
+    _provider.on("chainChanged", (chainId) => {
       console.log(chainId, 'chainChanged');
     });
 
     // Subscribe to session disconnection
-    provider.on("disconnect", (code, reason) => {
+    _provider.on("disconnect", (code, reason) => {
       console.log(code, reason);
     });
   }
