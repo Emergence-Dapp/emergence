@@ -10,13 +10,6 @@ async function main() {
   const SFRouterAddress = process.env.CONTRACT_ADDR;
   const provider = new hre.ethers.providers.JsonRpcProvider(process.env.MATIC_URL);
 
-  const sf = await Framework.create({
-    chainId: (await provider.getNetwork()).chainId,
-    provider,
-    customSubgraphQueriesEndpoint: "",
-    dataMode: "WEB3_ONLY"
-  });
-
   // const signers = await hre.ethers.getSigners();
   const sfRouter = new ethers.Contract(SFRouterAddress, SFRouterABI, provider);
   const wallet = new ethers.Wallet(process.env.PRI_KEY, provider);

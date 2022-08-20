@@ -9,6 +9,7 @@ import {CFAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/app
 
 contract SFRouter {
   address public owner;
+  uint256 public roomNumber = 0;
 
   using CFAv1Library for CFAv1Library.InitData;
   CFAv1Library.InitData public cfaV1; //initialize cfaV1 variable
@@ -26,6 +27,15 @@ contract SFRouter {
       address(host.getAgreementClass(keccak256("org.superfluid-finance.agreements.ConstantFlowAgreement.v1")))
       )
     );
+  }
+
+  // CREATE ROOM
+  function createRoom() external {
+    roomNumber++;
+  }
+
+  // SEND TRANSACTION
+  function sendTransaction() external { 
   }
 
   // ACCOUNT LIST: add & delete accounts
