@@ -34,22 +34,23 @@ function Room() {
   const setVisibility =(dat)=>{
     isVisible(dat)
   }
-
+  // let colsNumber=0;
+  // if(peers.length > 1){
+  //   colsNumber = 2
+  // } else {
+  //   colsNumber =1
+  // }
+ 
   return (
     <div className=" relative h-screen flex justify-center items-center px-12 bg-slate-800 flex-row gap-8 overflow-hidden">
       <div className=" bg-slate-600 shadow-md w-3/5 rounded-2xl">
         <span className="flex flex-col w-full h-full">
-          <div className="flex justify-center items-center w-full rounded-2xl">
-            {/* Share screen */}
-            {stage
-              ? null
-              : peers &&
-                peers
-                  .filter((peer) => !peer.isLocal)
+          <div className={`flex justify-center items-center rounded-2xl`}>
+            {peers
                   .map((peer) => {
                     return (
                       <>
-                        <ScreenShare isLocal={false} peer={peer} />
+                      <VideoTile isLocal={false} peer={peer} />
                       </>
                     );
                   })}
@@ -64,23 +65,9 @@ function Room() {
                 <span className="text-2xl mt-4">
                   Welcome {localPeer && localPeer.name}
                 </span>
-                {/* display users name */}
+
               </div>
-              <div className=" h-40 rounded-xl w-32 flec justify-center items-center">
-                {stage
-                  ? localPeer && <VideoTile peer={localPeer} isLocal={true} />
-                  : peers &&
-                    peers
-                      .filter((peer) => !peer.isLocal)
-                      .map((peer) => {
-                        return (
-                          <>
-                            <VideoTile isLocal={false} peer={peer} />
-                          </>
-                        );
-                      })}
-                {/* Room owner video chat */}
-              </div>
+
             </div>
             <div className="w-max px-4 bg-slate-500 h-12 rounded-md z-20">
               {/* Controls */}
@@ -124,22 +111,7 @@ function Room() {
           </div>
         </div>
       </span>
-      {/* section for attendees videos chat interface */}
-      {visible ? (
-        <div className=" absolute h-full w-1/2 top-0 right-0 bg-slate-900 z-10 py-3 px-6 grid grid-cols-3 gap-3 overflow-y-auto">
-          {localPeer && <VideoSpaces peer={localPeer} isLocal={true} />}
-          {peers &&
-            peers
-              .filter((peer) => !peer.isLocal)
-              .map((peer) => {
-                return (
-                  <>
-                    <VideoSpaces isLocal={false} peer={peer} />
-                  </>
-                );
-              })}
-        </div>
-      ) : null}
+
     </div>
   );
 }

@@ -33,7 +33,7 @@ function VideoTile({ peer, isLocal }) {
         playsInline
         muted={false}
         style={{ width: "calc(85vw - 100px)" }}
-        className={`object-cover h-40 w-40 rounded-lg mt-12 shadow-lg" ${
+        className={`object-cover h-120 w-40 rounded-lg mt-12 shadow-lg" ${
           isLocal ? "mirror" : ""
         }`}
       ></video>
