@@ -1,26 +1,24 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.0
+pragma solidity ^0.8.13;
 import "hardhat/console.sol";
 
-import { ISuperfluid }from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol"; //"@superfluid-finance/ethereum-monorepo/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
-import { IConstantFlowAgreementV1 } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
+import { ISuperfluid, ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import { ISuperfluidToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol";
+import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
 import {CFAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol";
 
 contract SFRouter {
   address public owner;
-  address public dao;
 
   using CFAv1Library for CFAv1Library.InitData;
   CFAv1Library.InitData public cfaV1; //initialize cfaV1 variable
   
   mapping (address => bool) public daoMembers;
 
-  constructor(ISuperfluid host, address _owner, address _daoAddress) {
+  constructor(ISuperfluid host, address _owner) {
     assert(address(host) != address(0));
-    assert(address(dao) != address(0));
-    console.log("Deploying a Money Router with owner:", owner);
     owner = _owner;
-    dao = _daoAddress;
+    console.log("Deploying a Money Router with owner:", owner);
 
     cfaV1 = CFAv1Library.InitData( //initialize InitData struct, and set equal to cfaV1 
     host, //here, we are deriving the address of the CFA using the host contract
@@ -40,7 +38,7 @@ contract SFRouter {
     require(msg.sender == owner, "only owner can add accounts");
     uint i = 0;
     while (i < _accounts.length) {
-      daoMembers[_account[i]] = true;
+      daoMembers[_accounts[i]] = true;
       i++;
     }  
   }
@@ -63,13 +61,13 @@ contract SFRouter {
 
   // DEPOSIT: to this contract
   function sendLumpSumToContract(ISuperToken token, uint amount) external {
-    require(msg.sender == owner || msg.sender == dao ||daoMembers[msg.sender] == true, "must be authorized");
+    require(msg.sender == owner ||daoMembers[msg.sender] == true, "must be authorized");
     token.transferFrom(msg.sender, address(this), amount);
   }
 
   // WITHDRAW: from account mapping to user address
   function withdrawFunds(ISuperToken token, uint amount) external {
-    require(msg.sender == owner || msg.sender == dao || daoMembers[msg.sender] == true, "must be authorized");
+    require(msg.sender == owner || daoMembers[msg.sender] == true, "must be authorized");
     token.transfer(msg.sender, amount);
   }
 }
