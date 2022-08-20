@@ -1,6 +1,15 @@
 require("@nomicfoundation/hardhat-toolbox");
+require('dotenv').config();
 
-/** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.9",
+  solidity: '0.8.13',
+  networks: {
+    matic: {
+      url: process.env.MATIC_URL,
+      accounts: [process.env.PRI_KEY]
+    },
+    // polygonscan: {
+    //   apiKey: process.env.POLYGONSCAN_API_KEY
+    // },
+  }
 };
