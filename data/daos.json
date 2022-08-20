@@ -1,32 +1,50 @@
 [
     {
-        "name": "Nouns DAO",
-        "status": "7 Rooms",
-        "description": "this is a DAO"
+        "name": "Uniswap",
+        "status": "12 available rooms",
+        "logo": "nouns.png",
+        "website": "https://uniswap.org/"
     },
     {
-        "name": "Nouns DAO",
-        "status": "8 Rooms",
-        "description": "this is a DAO"
+        "name": "ApeCoin",
+        "status": "14 available rooms",
+        "logo": "nouns.png",
+        "website": "https://apecoin.com/"
     },
     {
-        "name": "Nouns DAO",
-        "status": "9 Rooms",
-        "description": "this is a DAO"
+        "name": "Aave",
+        "status": "10 available rooms",
+        "logo": "nouns.png",
+        "website": "https://aave.com/"
     },
     {
-        "name": "Nouns DAO",
-        "status": "9 Rooms",
-        "description": "this is a DAO"
+        "name": "MakerDAO",
+        "status": "12 available rooms",
+        "logo": "nouns.png",
+        "website": "https://makerdao.com/"
     },
     {
-        "name": "Nouns DAO",
-        "status": "9 Rooms",
-        "description": "this is a DAO"
+        "name": "Lido",
+        "status": "9 available rooms",
+        "logo": "nouns.png",
+        "website": "https://lido.fi/"
     },
     {
-        "name": "Nouns DAO",
-        "status": "9 Rooms",
-        "description": "this is a DAO"
+        "name": "CurveDAO Token",
+        "status": "9 available rooms",
+        "logo": "nouns.png",
+        "website": "https://www.curve.fi/"
+    },
+   {
+        "name": "Dash",
+        "status": "7 available rooms",
+        "logo": "nouns.png",
+        "website": "https://www.dash.org/"
+    },
+   {
+        "name": "Decred",
+        "status": "10 available rooms",
+        "logo": "nouns.png",
+        "website": "https://decred.org/"
     }
 ]
