@@ -2,9 +2,18 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Login from "../components/Login";
 import { HMSRoomProvider } from "@100mslive/react-sdk";
+import { useWalletConnectClient } from '../contexts/ClientContext.jsx';
 
 
 export default function Home() {
+  const { connect, signer, provider } = useWalletConnectClient();
+  console.log({ signer, provider });
+  useEffect(() => {
+    (async () => {
+      // await connect();
+    })();
+  }, [])
+
   return (
     <HMSRoomProvider>
     <div>
