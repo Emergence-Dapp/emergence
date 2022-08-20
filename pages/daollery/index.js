@@ -1,5 +1,5 @@
-import { Header } from "../components/Header";
-import { DaoCard } from "../components/DaoCard";
+import { Header } from "../../components/Header";
+import { DaoCard } from "../../components/DaoCard";
 import daoData from '../../data/daos.json';
 
 console.log("daoData:", daoData);
