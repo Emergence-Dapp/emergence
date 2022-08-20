@@ -34,7 +34,8 @@ function Controls({ switches }) {
 
   const [proof,setProof] = useState();
   const [externalNullifier,setExternalNullifier] = useState();
-  const [signal,setSignal] = useState();
+  // const [signal,setSignal] = useState();
+  const [identityCommitment,setIdentityCommitment] = useState();
 
   const TEST_NET_PRIVATE_KEY = process.env.NEXT_PUBLIC_TEST_PRIVATE_KEY;
   console.log(TEST_NET_PRIVATE_KEY);
@@ -43,6 +44,14 @@ function Controls({ switches }) {
   const SempahoreAddress ="0x7a9aBb8C43916a9Ddcf9307e0664aC37A822a0Aa";
   const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.g.alchemy.com/v2/0aWYomtIkhZ7DpFAZtNasdu74nL_ZlMf");
   const signer = new ethers.Wallet(TEST_NET_PRIVATE_KEY).connect(provider);
+  const admin = '0xd770134156f9aB742fDB4561A684187f733A9586';
+
+  //1.Have the hashed identity + signed from backend
+  const signal = "Hello ZK";
+  const signalBytes32 = ethers.utils.formatBytes32String(signal);
+  //2.Have the ExternalNullifier as the roomId
+
+
 
   const semaphoreContract = new ethers.Contract(SempahoreAddress,SemaphoreABI,signer);
 
@@ -87,6 +96,7 @@ function Controls({ switches }) {
     const newIdentityCommitment = newIdentity.generateCommitment();
     console.log(newIdentity);
     console.log(newIdentityCommitment);
+    setIdentityCommitment(newIdentityCommitment);
 
     //Generate Group
     const group = new Group();
@@ -95,7 +105,7 @@ function Controls({ switches }) {
     //Generate Proof
 
     const localExternalNullifier = group.root
-    const signal = "proposal_1"
+    // const signal = "proposal_1"
 
     const fullProof = await generateProof(newIdentity, group, localExternalNullifier, signal, {
         zkeyFilePath: "https://www.trusted-setup-pse.org/semaphore/20/semaphore.zkey",
@@ -120,19 +130,59 @@ function Controls({ switches }) {
 
   async function onHandleCreateGroup(){
     console.log("Create Group");
-    const groupId2 = 999
+    const groupId2 = 1001
     const createGroup = await semaphoreContract.createGroup(groupId2,20,0,admin);
-    let tx1 = await createGroup.wait()
-    console.log(identityCommitment);
+    console.log(createGroup);
+    // let tx1 = await createGroup.wait()
+    // console.log(tx1);
 
-    const addMember = await semaphoreContract.addMember(groupId2,identityCommitment);
-    tx1 = await addMember.wait()
+    // const addMember = await semaphoreContract.addMember(groupId2,identityCommitment);
+    // tx1 = await addMember.wait()
   }
 
   async function onHandleAddMember(){
     console.log("Add Member")
-    const addMember = await semaphoreContract.addMember(groupId2,identityCommitment);
+    console.log(identityCommitment);
+    const addMember = await semaphoreContract.addMember(999,identityCommitment);
     tx1 = await addMember.wait()
+  }
+
+  async function onHandleVerifyOnChain(){
+    console.log("On Chain Verification Tx");
+    const groupId2 = 1000
+    const localExternalNullifier = 100002;
+    const newIdentity = new Identity("signal message");
+    const newIdentityCommitment = newIdentity.generateCommitment();
+
+    const group = new Group();
+    group.addMember(newIdentityCommitment);
+
+    
+   
+    console.log(group)
+    console.log("Group Root")
+    console.log(group.root)
+   
+
+    const fullProof = await generateProof(newIdentity, group, localExternalNullifier, signal, {
+      zkeyFilePath: "https://www.trusted-setup-pse.org/semaphore/20/semaphore.zkey",
+      wasmFilePath: "https://www.trusted-setup-pse.org/semaphore/20/semaphore.wasm"
+  })
+
+    const { nullifierHash } = fullProof.publicSignals
+    const solidityProof = packToSolidityProof(fullProof.proof)
+    console.log("Solidity Proof");
+    console.log(solidityProof);
+
+    console.log("signalBytes");
+    console.log(signalBytes32);
+
+
+
+    const checkMembership = await semaphoreContract.verifyProof(999,signalBytes32,nullifierHash,localExternalNullifier,solidityProof);
+    const tx = await checkMembership.wait();
+
+    console.log(tx);
   }
 
   return (
@@ -184,6 +234,12 @@ function Controls({ switches }) {
             onClick={onHandleAddMember}
           >
             AddMember
+          </button>
+          <button
+            className=" uppercase px-5 py-2 hover:bg-blue-600"
+            onClick={onHandleVerifyOnChain}
+          >
+            Verify On Chain
           </button>
     </div>
   );
