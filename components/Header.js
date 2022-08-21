@@ -14,7 +14,7 @@ export const Header = () => {
 
     return (        
         <div className="mb-4">
-            <div className="m-6">
+            <div className="flex items-center justify-between m-6">
                 <div className="float-left flex items-center">
                     <img src="/emergence-logo.png" className="w-10 mr-4 inline" alt="Emergence" />
                     <h1 className="text-brand-light text-3xl lowercase font-semibold tracking-tighter inline">Emergence</h1>
@@ -25,9 +25,21 @@ export const Header = () => {
                 }
                 </div>
             </div>
-            <div className="clear-both"></div>
         </div>
     )
 }
 
-//  btn flex-1 text-white bg-blue-600 py-3 px-10 rounded-md
+{/* <div className="mb-4">
+    <div className="m-6">
+        <div className="float-left flex items-center">
+            <img src="/emergence-logo.png" className="w-10 mr-4 inline" alt="Emergence" />
+            <h1 className="text-brand-light text-3xl lowercase font-semibold tracking-tighter inline">Emergence</h1>
+        </div>
+        <div className="float-right">
+        {
+            signer ? <span class="btn-secondary text-brand-light truncate w-44">{signerAddress}</span> : <button className="btn-secondary flex-row-reverse" onClick={connect}>connect</button>
+        }
+        </div>
+    </div>
+    <div className="clear-both"></div>
+</div> */}

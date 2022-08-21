@@ -1,58 +1,58 @@
 [
     {
         "id": 1,
-        "name": "Uniswap",
-        "status": "12 available rooms",
+        "name": "ETHGlobal",
+        "status": "9 available rooms",
         "logo": "nouns.png",
-        "website": "https://uniswap.org/"
+        "website": "ethglobal.com"
     },
     {
         "id": 2,
-        "name": "ApeCoin",
-        "status": "14 available rooms",
+        "name": "Polygon",
+        "status": "8 available rooms",
         "logo": "nouns.png",
-        "website": "https://apecoin.com/"
+        "website": "https://polygon.technology/"
     },
     {
         "id": 3,
-        "name": "Aave",
-        "status": "10 available rooms",
+        "name": "WalletConnect",
+        "status": "7 available rooms",
         "logo": "nouns.png",
-        "website": "https://aave.com/"
+        "website": "https://walletconnect.com/"
     },
     {
         "id": 4,
-        "name": "MakerDAO",
-        "status": "12 available rooms",
+        "name": "SuperFluid",
+        "status": "9 available rooms",
         "logo": "nouns.png",
-        "website": "https://makerdao.com/"
+        "website": "https://www.superfluid.finance/home"
     },
     {
         "id": 5,
-        "name": "Lido",
-        "status": "9 available rooms",
+        "name": "IPFS & Filecoin",
+        "status": "8 available rooms",
         "logo": "nouns.png",
-        "website": "https://lido.fi/"
+        "website": "https://hackathons.filecoin.io/"
     },
     {
         "id": 6,
-        "name": "CurveDAO Token",
+        "name": "Starkware",
         "status": "9 available rooms",
         "logo": "nouns.png",
-        "website": "https://www.curve.fi/"
+        "website": "https://starkware.co/"
     },
    {
-        "id": 7,    
-        "name": "Dash",
+        "id": 7,
+        "name": "Gnosis Chain",
         "status": "7 available rooms",
         "logo": "nouns.png",
-        "website": "https://www.dash.org/"
+        "website": "https://developers.gnosischain.com/"
     },
    {
-        "id": 8,    
-        "name": "Decred",
-        "status": "10 available rooms",
+        "id": 8,
+        "name": "Semaphore",
+        "status": "6 available rooms",
         "logo": "nouns.png",
-        "website": "https://decred.org/"
+        "website": "https://semaphore.appliedzkp.org/"
     }
 ]
