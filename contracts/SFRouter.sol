@@ -97,7 +97,6 @@ contract SFRouter {
   
   // FROM CONTRACT: create, delete
   function createFlowFromContract(ISuperfluidToken token, address receiver, int96 flowRate) internal {
-    // require(msg.sender == owner || daoMembers[msg.sender] == true, "must be authorized");
     cfaV1.createFlow(receiver, token, flowRate);
   }
 

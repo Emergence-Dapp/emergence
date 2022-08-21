@@ -7,7 +7,7 @@ import {
   selectLocalPeer,
   selectPeers,
 } from '@100mslive/react-sdk'
-
+import Counter from './Counter'
 import VideoTile from './VideoTile'
 
 function Room({ roomId }) {
@@ -42,6 +42,7 @@ function Room({ roomId }) {
 
   return (
     <div className=" relative h-screen flex justify-center items-center bg-slate-800 flex-row gap-4 overflow-hidden">
+      
       <div className=" bg-slate-600 shadow-md w-3/5 rounded-2xl">
         <span className="flex flex-col w-full h-full">
           <div className={`flex justify-center items-center rounded-2xl`}>
@@ -63,6 +64,7 @@ function Room({ roomId }) {
                 <span className="text-2xl mt-4">
                   Welcome {localPeer && localPeer.name}
                 </span>
+                <Counter />
               </div>
             </div>
             <div className="w-max px-1 mb-7 bg-slate-500 h-12 rounded-md z-20">
