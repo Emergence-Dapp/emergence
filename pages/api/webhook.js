@@ -46,7 +46,7 @@ export default async function handler(req, res) {
         method
     } = req
 
-    console.log({ method, type });
+    console.log({ method, type, data });
     if (method == 'POST') {
         if (type == 'recording.success') {
             const videoUrl = data.URL;
