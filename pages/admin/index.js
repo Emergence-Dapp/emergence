@@ -24,7 +24,7 @@ function getTranscriptResult() {
         status = res.data.status;
     })
     .catch((err) => console.error(err));
-    if(status !== 'completed') {
+    if(status !== 'completed' && status !== 'error') {
         setTimeout(getTranscriptResult, 5000);        
     }
 }
@@ -32,7 +32,12 @@ function getTranscriptResult() {
 function postTranscriptForProcessing() {
     assembly
     .post("/transcript", {
-        audio_url: "https://bit.ly/3yxKEIY"
+        audio_url: "https://bit.ly/3yxKEIY",
+        // webhook_url: "",
+        auto_highlights: true,
+        iab_categories: true,
+        sentiment_analysis: true,
+        entity_detection: true
     })
     .then((res) => {
         console.log(res.data);
@@ -40,7 +45,7 @@ function postTranscriptForProcessing() {
         status = res.data.status;
     })
     .catch((err) => console.error(err));
-    if(status !== 'completed') {
+    if(status !== 'completed' && status !== 'error') {
         setTimeout(getTranscriptResult, 5000);        
     }
 }
@@ -129,10 +134,10 @@ export default function AdminPage({ meetingData }) {
                                     }
                                    {show==index &&  <div className="dropdown-content bg-white shadow w-24 absolute z-30 right-10 mr-6 ">
                                         <div className="text-xs w-full hover:bg-brand-light py-4 px-4 cursor-pointer">
-                                            <p onClick={postTranscriptForProcessing}>Analysis</p>
+                                            <a href={"session-analysis/" + item.id}>Analysis</a>
                                         </div>
                                         <div className="text-xs w-full hover:bg-brand-light py-4 px-4 cursor-pointer">
-                                            <p>Feedback</p>
+                                            <p onClick={postTranscriptForProcessing}>Feedback</p>
                                         </div>
                                     </div>}
                                 </td>

@@ -3,17 +3,17 @@ export const RoomCard = ({data}) => {
     
     return (
         
-        <div className="text-gray-100 group relative bg-brand-med-dark border-8 px-6 py-4 border-brand-dark">
+        <div className="text-gray-100 group relative bg-brand-med-dark px-6 py-4">
             <div className="text-xl uppercase font-semibold">Room { data.id }</div>
             <span className={((data.joinable) ? "bg-brand-green" : "bg-brand-purple") + " text-brand-dark text-xs px-4 py-2 mt-3 mb-4 inline-block uppercase tracking-wide font-semibold rounded-full border-0"}>
              {data.status}
             </span>
             <div className="text-semibold">{ data.purpose }</div>
-            <div>{ data.host }<span className="text-brand-purple"> hosting </span></div>
+            {/* <div>{ data.host }<span className="text-brand-purple"> hosting </span></div> */}
             <div className="text-brand-purple">{ data.duration }</div>
             { (data.joinable) ? 
             <div className="absolute top-0 left-0 w-full h-0 flex flex-col justify-center items-center bg-brand-dark opacity-0 group-hover:h-full group-hover:opacity-100 duration-300">            
-                <a class="btn-primary" href={"../room/" + data.id}>Join</a>
+                <a class="btn-primary" href={"../room/" + data.id}>Join Now</a>
             </div>
             : "" }
         </div>

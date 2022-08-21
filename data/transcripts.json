@@ -1,0 +1,408 @@
+[
+    {
+    "id": "on4c0f85vx-454d-417c-84aa-2a5feb8fbf29",
+    "language_model": "assemblyai_default",
+    "acoustic_model": "assemblyai_default",
+    "language_code": "en_us",
+    "status": "completed",
+    "audio_url": "https://bit.ly/3yxKEIY",
+    "text": "You know, demons on TV like that. And and for people to expose themselves to being rejected on TV or, you know, humili humiliated by Fear Factor or, you know.",
+    "words": [
+        {
+            "text": "You",
+            "start": 430,
+            "end": 522,
+            "confidence": 1,
+            "speaker": null
+        },
+        {
+            "text": "know,",
+            "start": 536,
+            "end": 858,
+            "confidence": 0.99921,
+            "speaker": null
+        },
+        {
+            "text": "demons",
+            "start": 944,
+            "end": 1402,
+            "confidence": 0.99509,
+            "speaker": null
+        },
+        {
+            "text": "on",
+            "start": 1426,
+            "end": 1578,
+            "confidence": 0.9996,
+            "speaker": null
+        },
+        {
+            "text": "TV",
+            "start": 1604,
+            "end": 1894,
+            "confidence": 0.9786,
+            "speaker": null
+        },
+        {
+            "text": "like",
+            "start": 1942,
+            "end": 2118,
+            "confidence": 0.99969,
+            "speaker": null
+        },
+        {
+            "text": "that.",
+            "start": 2144,
+            "end": 2334,
+            "confidence": 0.99953,
+            "speaker": null
+        },
+        {
+            "text": "And",
+            "start": 2372,
+            "end": 2754,
+            "confidence": 0.99,
+            "speaker": null
+        },
+        {
+            "text": "and",
+            "start": 2852,
+            "end": 3114,
+            "confidence": 0.87,
+            "speaker": null
+        },
+        {
+            "text": "for",
+            "start": 3152,
+            "end": 3354,
+            "confidence": 0.88397,
+            "speaker": null
+        },
+        {
+            "text": "people",
+            "start": 3392,
+            "end": 3630,
+            "confidence": 0.99953,
+            "speaker": null
+        },
+        {
+            "text": "to",
+            "start": 3680,
+            "end": 4074,
+            "confidence": 0.99,
+            "speaker": null
+        },
+        {
+            "text": "expose",
+            "start": 4172,
+            "end": 4558,
+            "confidence": 0.99967,
+            "speaker": null
+        },
+        {
+            "text": "themselves",
+            "start": 4594,
+            "end": 4974,
+            "confidence": 0.66975,
+            "speaker": null
+        },
+        {
+            "text": "to",
+            "start": 5072,
+            "end": 5298,
+            "confidence": 1,
+            "speaker": null
+        },
+        {
+            "text": "being",
+            "start": 5324,
+            "end": 5514,
+            "confidence": 0.99939,
+            "speaker": null
+        },
+        {
+            "text": "rejected",
+            "start": 5552,
+            "end": 6058,
+            "confidence": 0.9998,
+            "speaker": null
+        },
+        {
+            "text": "on",
+            "start": 6094,
+            "end": 6222,
+            "confidence": 0.99987,
+            "speaker": null
+        },
+        {
+            "text": "TV",
+            "start": 6236,
+            "end": 6574,
+            "confidence": 0.56787,
+            "speaker": null
+        },
+        {
+            "text": "or,",
+            "start": 6622,
+            "end": 7086,
+            "confidence": 0.99765,
+            "speaker": null
+        },
+        {
+            "text": "you",
+            "start": 7208,
+            "end": 7422,
+            "confidence": 1,
+            "speaker": null
+        },
+        {
+            "text": "know,",
+            "start": 7436,
+            "end": 7650,
+            "confidence": 0.9994,
+            "speaker": null
+        },
+        {
+            "text": "humili",
+            "start": 7700,
+            "end": 8206,
+            "confidence": 0.35865,
+            "speaker": null
+        },
+        {
+            "text": "humiliated",
+            "start": 8278,
+            "end": 8950,
+            "confidence": 0.5512,
+            "speaker": null
+        },
+        {
+            "text": "by",
+            "start": 9010,
+            "end": 9270,
+            "confidence": 0.89036,
+            "speaker": null
+        },
+        {
+            "text": "Fear",
+            "start": 9320,
+            "end": 9598,
+            "confidence": 0.99843,
+            "speaker": null
+        },
+        {
+            "text": "Factor",
+            "start": 9634,
+            "end": 10090,
+            "confidence": 0.69663,
+            "speaker": null
+        },
+        {
+            "text": "or,",
+            "start": 10150,
+            "end": 10760,
+            "confidence": 0.99952,
+            "speaker": null
+        },
+        {
+            "text": "you",
+            "start": 11270,
+            "end": 11562,
+            "confidence": 1,
+            "speaker": null
+        },
+        {
+            "text": "know.",
+            "start": 11576,
+            "end": 11640,
+            "confidence": 0.99929,
+            "speaker": null
+        }
+    ],
+    "utterances": null,
+    "confidence": 0.914423333333333,
+    "audio_duration": 12,
+    "punctuate": true,
+    "format_text": true,
+    "dual_channel": null,
+    "webhook_url": null,
+    "webhook_status_code": null,
+    "webhook_auth": false,
+    "webhook_auth_header_name": null,
+    "speed_boost": false,
+    "auto_highlights_result": {
+        "status": "success",
+        "results": [
+            {
+                "count": 1,
+                "rank": 0.19,
+                "text": "Fear Factor",
+                "timestamps": [
+                    {
+                        "start": 9320,
+                        "end": 10090
+                    }
+                ]
+            },
+            {
+                "count": 2,
+                "rank": 0.17,
+                "text": "TV",
+                "timestamps": [
+                    {
+                        "start": 1604,
+                        "end": 1894
+                    },
+                    {
+                        "start": 6236,
+                        "end": 6574
+                    }
+                ]
+            },
+            {
+                "count": 1,
+                "rank": 0.15,
+                "text": "people",
+                "timestamps": [
+                    {
+                        "start": 3392,
+                        "end": 3630
+                    }
+                ]
+            },
+            {
+                "count": 1,
+                "rank": 0.13,
+                "text": "humili",
+                "timestamps": [
+                    {
+                        "start": 7700,
+                        "end": 8206
+                    }
+                ]
+            }
+        ]
+    },
+    "auto_highlights": true,
+    "audio_start_from": null,
+    "audio_end_at": null,
+    "word_boost": [],
+    "boost_param": null,
+    "filter_profanity": false,
+    "redact_pii": false,
+    "redact_pii_audio": false,
+    "redact_pii_audio_quality": null,
+    "redact_pii_policies": null,
+    "redact_pii_sub": null,
+    "speaker_labels": false,
+    "content_safety": false,
+    "iab_categories": true,
+    "content_safety_labels": {
+        "status": "unavailable",
+        "results": [],
+        "summary": {}
+    },
+    "iab_categories_result": {
+        "status": "success",
+        "results": [
+            {
+                "text": "You know, demons on TV like that. And and for people to expose themselves to being rejected on TV or, you know, humili humiliated by Fear Factor or, you know.",
+                "labels": [
+                    {
+                        "relevance": 0.9994874000549316,
+                        "label": "Television>RealityTV"
+                    },
+                    {
+                        "relevance": 0.3285791873931885,
+                        "label": "Television>FactualTV"
+                    },
+                    {
+                        "relevance": 0.030304817482829094,
+                        "label": "PopCulture>CelebrityStyle"
+                    },
+                    {
+                        "relevance": 0.0168350450694561,
+                        "label": "PopCulture"
+                    },
+                    {
+                        "relevance": 0.015332694165408611,
+                        "label": "BusinessAndFinance>Industries>MediaIndustry"
+                    },
+                    {
+                        "relevance": 0.012291282415390015,
+                        "label": "PopCulture>CelebrityScandal"
+                    },
+                    {
+                        "relevance": 0.006327959708869457,
+                        "label": "Television>MusicTV"
+                    },
+                    {
+                        "relevance": 0.002609025686979294,
+                        "label": "MusicAndAudio>TalkRadio"
+                    },
+                    {
+                        "relevance": 0.002202278934419155,
+                        "label": "BusinessAndFinance>Industries>EntertainmentIndustry"
+                    },
+                    {
+                        "relevance": 0.0020797441247850657,
+                        "label": "Television>DramaTV"
+                    }
+                ],
+                "timestamp": {
+                    "start": 430,
+                    "end": 11640
+                }
+            }
+        ],
+        "summary": {
+            "Television>RealityTV": 1,
+            "Television>FactualTV": 0.3287476897239685,
+            "PopCulture>CelebrityStyle": 0.030320359393954277,
+            "PopCulture": 0.016843678429722786,
+            "BusinessAndFinance>Industries>MediaIndustry": 0.01534055732190609,
+            "PopCulture>CelebrityScandal": 0.012297586537897587,
+            "Television>MusicTV": 0.006331204902380705,
+            "MusicAndAudio>TalkRadio": 0.0026103637646883726,
+            "BusinessAndFinance>Industries>EntertainmentIndustry": 0.00220340839587152,
+            "Television>DramaTV": 0.002080810721963644,
+            "Television>SpecialInterestTV": 0.0017086880980059505,
+            "Television": 0.001131839700974524,
+            "Technology&Computing>Computing>Internet>SocialNetworking": 0.0010941996006295085,
+            "PopCulture>CelebrityFamilies": 0.0009373330976814032,
+            "Style&Fashion>Beauty": 0.0009144238429144025,
+            "Television>Children'sTV": 0.0008934942306950688,
+            "NewsAndPolitics>NationalNews": 0.0008746082312427461,
+            "PopCulture>CelebrityRelationships": 0.0008703073253855109,
+            "MedicalHealth>DiseasesAndConditions>Injuries>FirstAid": 0.0008238095324486494,
+            "NewsAndPolitics": 0.0008061378030106425
+        }
+    },
+    "language_detection": false,
+    "custom_spelling": null,
+    "disfluencies": false,
+    "sentiment_analysis": true,
+    "auto_chapters": false,
+    "chapters": null,
+    "sentiment_analysis_results": [
+        {
+            "text": "You know, demons on TV like that.",
+            "start": 430,
+            "end": 2334,
+            "sentiment": "NEGATIVE",
+            "confidence": 0.5303722620010376,
+            "speaker": null
+        },
+        {
+            "text": "And and for people to expose themselves to being rejected on TV or, you know, humili humiliated by Fear Factor or, you know.",
+            "start": 2372,
+            "end": 11640,
+            "sentiment": "NEGATIVE",
+            "confidence": 0.8029202222824097,
+            "speaker": null
+        }
+    ],
+    "entity_detection": true,
+    "entities": []
+}
+]
