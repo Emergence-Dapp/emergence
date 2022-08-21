@@ -10,36 +10,36 @@ aws.config.update({
 export default async function handler(req, res) {
     const s3Client = new AWS.S3();
 
-    const saveTranscriptions = (data) => {
-        return new Promise((resolve, reject) => {
-            s3Client.putObject({
-                Bucket: 'emergence-dapp',
-                Key: 'transcriptions.json',
-                Body: data
-            }, (err, res) => {
-                if (err) {
-                    return reject(err);
-                }
-                resolve(res);
-            })
-        })
-    };
+    // const saveTranscriptions = (data) => {
+    //     return new Promise((resolve, reject) => {
+    //         s3Client.putObject({
+    //             Bucket: 'emergence-dapp',
+    //             Key: 'transcriptions.json',
+    //             Body: data
+    //         }, (err, res) => {
+    //             if (err) {
+    //                 return reject(err);
+    //             }
+    //             resolve(res);
+    //         })
+    //     })
+    // };
 
-    const getTranscriptions = () => {
-        return new Promise((resolve, reject) => {
-            const searchParams = {
-                Bucket: 'emergence-dapp',
-                Key: 'transcriptions.json'
-            };
+    // const getTranscriptions = () => {
+    //     return new Promise((resolve, reject) => {
+    //         const searchParams = {
+    //             Bucket: 'emergence-dapp',
+    //             Key: 'transcriptions.json'
+    //         };
 
-            s3Client.getObject(searchParams, (err, data) => {
-                if (err) {
-                    return reject(err);
-                }
-                resolve(data.Body.toString());
-            });
-        });
-    };
+    //         s3Client.getObject(searchParams, (err, data) => {
+    //             if (err) {
+    //                 return reject(err);
+    //             }
+    //             resolve(data.Body.toString());
+    //         });
+    //     });
+    // };
 
     const {
         body: { type, data },
@@ -58,25 +58,25 @@ export default async function handler(req, res) {
             console.log({ data });
             return res.status(200).send('success');
         } else if (type == 'session.close.success') {
-            let indexData = '[]';
-            try {
-                indexData = await getTranscriptions()
-                console.log('getTranscriptions results', indexData);
-            } catch (err) {
-                console.error('getTranscriptions failed');
-                console.error({ err })
-            }
+            // let indexData = '[]';
+            // try {
+            //     indexData = await getTranscriptions()
+            //     console.log('getTranscriptions results', indexData);
+            // } catch (err) {
+            //     console.error('getTranscriptions failed');
+            //     console.error({ err })
+            // }
 
-            const indexDataObj = JSON.parse(indexData);
-            indexDataObj.push({ ...data });
-            try {
-                await saveTranscriptions(JSON.stringify(indexDataObj));
-            } catch (err) {
-                console.error('saveTranscriptions failed');
-                console.error(err);
-            }
+            // const indexDataObj = JSON.parse(indexData);
+            // indexDataObj.push({ ...data });
+            // try {
+            //     await saveTranscriptions(JSON.stringify(indexDataObj));
+            // } catch (err) {
+            //     console.error('saveTranscriptions failed');
+            //     console.error(err);
+            // }
 
-            return res.status(200).json(indexDataObj);
+            // return res.status(200).json(indexDataObj);
         }
     }
 
