@@ -63,7 +63,7 @@ export default async function handler(req, res) {
             }
 
             const indexDataObj = JSON.parse(indexData);
-            indexDataObj.push({ id: data.id });
+            indexDataObj.push({ ...data });
             try {
                 await saveTranscriptions(JSON.stringify(indexDataObj));
             } catch (err) {
