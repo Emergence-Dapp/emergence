@@ -7,7 +7,17 @@ import {
 import Room from './Room'
 
 function Login({ roomId }) {
-  const roomKeys = ['62f64a58b1e780e78c3b3fac', '63004db6b1e780e78c3bc4ff']
+  const roomKeys = [
+    '62f64a58b1e780e78c3b3fac',
+    '63004db6b1e780e78c3bc4ff',
+    '6301621ac16640065697ad48',
+    '6301c066b1e780e78c3bd6d4',
+    '6301c077c16640065697afbe',
+    '6301c089c16640065697afbf',
+    '6301c09bb1e780e78c3bd6d6',
+    '6301c0aeb1e780e78c3bd6d7',
+    '6301c0c7c16640065697afc2',
+  ]
 
   const endpoint =
     'https://prod-in2.100ms.live/hmsapi/videodemo.app.100ms.live/'
