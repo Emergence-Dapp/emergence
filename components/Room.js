@@ -54,18 +54,29 @@ function Room({ roomId }) {
             })}
           </div>
           <span className=" h-2/5 w-full h-full flex flex-col gap-8 mt-3 px-3">
-            <div className=" flex flex-row w-full gap-28">
-              <div className=" text-white w-3/5">
+            <div className="w-full">
+              <div className=" text-white">
                 <h3 className=" text-4xl font-black">Live</h3>
-                {/* <h2 className=" text-2xl font-semibold">
-                  
-                </h2> */}
-                <span className="text-2xl mt-4">
-                  Welcome {localPeer && localPeer.name}
-                </span>
+
+                <div className="flex justify-between">
+                  <span className="text-2xl mt-4">
+                    Welcome {localPeer && localPeer.name}
+                  </span>
+                  <div className="flex flex-row gap-3 items-center bg-slate-500 p-3 rounded-md mr-20 font-semibold uppercase">
+                    <h3>Review Meeting</h3>
+                    <select className="text-black">
+                      <option value="1">1 STAR</option>
+                      <option value="2">2 STARS</option>
+                      <option value="3">3 STARS</option>
+                      <option value="4">4 STARS</option>
+                      <option value="5">5 STARS</option>
+                    </select>
+                    <button className="hover:bg-blue-600">Submit</button>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="w-max px-1 mb-7 bg-slate-500 h-12 rounded-md z-20">
+            <div className="w-max px-1 mb-7 bg-slate-500 h-12 rounded-md z-20 flex justify-end">
               {/* Controls */}
               <Controls switches={setVisibility} />
             </div>
