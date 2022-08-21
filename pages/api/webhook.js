@@ -8,7 +8,7 @@ aws.config.update({
 });
 
 export default async function handler(req, res) {
-    const s3Client = new AWS.S3();
+    // const s3Client = new aws.S3();
 
     // const saveTranscriptions = (data) => {
     //     return new Promise((resolve, reject) => {
