@@ -26,11 +26,8 @@
     "@types/chai": "^4.2.0",
     "@types/mocha": "^9.1.0",
     "@walletconnect/web3-provider": "^1.8.0",
-<<<<<<< HEAD
-=======
     "aws-sdk": "^2.1199.0",
     "axios": "^0.27.2",
->>>>>>> c054201bf49be55368b47e9db0c029d8d0382696
     "chai": "^4.2.0",
     "dotenv": "^16.0.1",
     "ethereumjs-util": "^7.1.5",

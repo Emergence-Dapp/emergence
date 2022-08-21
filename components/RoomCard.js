@@ -13,7 +13,7 @@ export const RoomCard = ({data}) => {
             <div className="text-brand-purple">{ data.duration }</div>
             { (data.joinable) ? 
             <div className="absolute top-0 left-0 w-full h-0 flex flex-col justify-center items-center bg-brand-dark opacity-0 group-hover:h-full group-hover:opacity-100 duration-300">            
-                <a class="btn-primary" href="#">Join</a>
+                <a class="btn-primary" href={"../room/" + data.id}>Join</a>
             </div>
             : "" }
         </div>
