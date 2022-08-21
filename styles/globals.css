@@ -5,6 +5,10 @@
   @apply inline-block px-6 py-3 bg-brand-salmon hover:bg-brand-salmon-darker rounded-lg text-brand-dark uppercase font-semibold text-base tracking-wider;
 }
 
+.btn-secondary {
+  @apply inline-block px-6 py-3 bg-brand-med-dark hover:bg-brand-light hover:text-brand-dark rounded-lg text-white uppercase font-semibold text-base tracking-wider;
+}
+
 
 
 @tailwind utilities;
