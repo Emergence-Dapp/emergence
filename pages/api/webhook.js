@@ -51,7 +51,7 @@ export default async function handler(req, res) {
             console.log({ data });
             return res.status(200).send('success');
         } else if (type == 'session.open.success') {
-            const authKey = getManagementKey()
+            const authKey = await getManagementKey()
             const options = {
                 method: 'POST',
                 url: 'https://prod-in2.100ms.live/api/v2/beam',
