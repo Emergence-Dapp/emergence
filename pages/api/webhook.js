@@ -67,7 +67,7 @@ export default async function handler(req, res) {
                 data: {
                     operation: 'start',
                     room_id: '63004db6b1e780e78c3bc4ff',
-                    meeting_url: 'https://video-demo-next.app.100ms.live/preview/63004db6b1e780e78c3bc4ff/stage?skip_preview=true',
+                    meeting_url: 'https://videodemo.app.100ms.live/preview/63004db6b1e780e78c3bc4ff/stage?skip_preview=true',
                     record: true,
                     resolution: { width: 1280, height: 720 }
                 }
