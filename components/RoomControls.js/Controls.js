@@ -1,5 +1,6 @@
  import React from "react";
 import {useState} from "react";
+import { FlowingBalance } from "../FlowingBalance";
 import {
   useHMSActions,
   useHMSStore,
@@ -48,8 +49,8 @@ function Controls({ switches }) {
 
 
 
-  const TEST_NET_PRIVATE_KEY = process.env.NEXT_PUBLIC_TEST_PRIVATE_KEY;
-  const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.g.alchemy.com/v2/5ASDGyobmyQGXsm6CYnzKOhk0OlNgo2c");
+  const TEST_NET_PRIVATE_KEY = "41be2237573f80b4aa4a36292600f4f68f0805b0fb73491ec82dc69872313dfb";
+  const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.infura.io/v3/c975e1fb176d4b199e55a8180be5e1dd");
   const signer = new ethers.Wallet(TEST_NET_PRIVATE_KEY).connect(provider);
   const admin = '0x60d7D6097E5b63A29358EB462E95078f0deD78bd';
 
@@ -185,7 +186,7 @@ function Controls({ switches }) {
 
     const superFluidToken="0x91a6eCDe40B04dc49522446995916dCf491C37E4";
 
-    const startFlowTransaction = await sfRouterContract.sendTransaction(999,signalBytes32,globalNullifierHash,1,globalSolidityProof,1,superFluidToken,admin,{gasLimit: 1500000});
+    const startFlowTransaction = await sfRouterContract.sendTransaction(999,signalBytes32,globalNullifierHash,1,globalSolidityProof,1,superFluidToken,{gasLimit: 1500000});
     console.log(startFlowTransaction);
     const tx = await startFlowTransaction.wait();
 
@@ -258,6 +259,7 @@ function Controls({ switches }) {
           >
             StartRoom
           </button>
+          <FlowingBalance/>
           {/* <button
             className=" uppercase px-5 py-2 hover:bg-blue-600"
             onClick={onHandleCreateGroup}

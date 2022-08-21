@@ -57,8 +57,7 @@ contract SFRouter {
     uint256[8] calldata proof, 
     // bytes32 signedMessage, 
     uint256 roomId,
-    ISuperfluidToken token,
-    address receiver
+    ISuperfluidToken token
     ) external { 
     
     //1.Call VerifyProof from Semaphore Contract
@@ -73,7 +72,7 @@ contract SFRouter {
     //4.Check if messaged Signer = BackendAddress
 
     //5.Start flow
-    createFlowFromContract(token, receiver, 3858024691358020);
+    createFlowFromContract(token, msg.sender, 38580246913580200);
   }
 
   // ACCOUNT LIST: add & delete accounts
