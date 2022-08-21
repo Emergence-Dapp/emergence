@@ -1,18 +1,13 @@
 import React, { useState } from 'react'
-import { FlowingBalance } from '../FlowingBalance'
 import {
   useHMSActions,
   useHMSStore,
-  selectPeers,
-  selectLocalPeer,
   selectIsLocalAudioEnabled,
   selectIsLocalVideoEnabled,
-  selectPermissions,
-  selectIsLocalScreenShared,
 } from '@100mslive/react-sdk'
 
 import { ethers } from 'ethers'
-import Semaphore from '../../pages/utils/Semaphore.json'
+// import Semaphore from '../../pages/utils/Semaphore.json'
 import SFRouter from '../../pages/utils/SFRouter.json'
 
 import { Identity } from '@semaphore-protocol/identity'
@@ -31,29 +26,26 @@ function Controls({ switches, setReviewRoomId, setFlowStarted }) {
   const isLocalVideoEnabled = useHMSStore(selectIsLocalVideoEnabled)
 
   const [globalSolidityProof, setGlobalSolidityProof] = useState()
-  const [globalExternalNullifier, setGlobalExternalNullifier] = useState(1)
+  const [globalExternalNullifier, setGlobalExternalNullifier] = useState()
   const [globalNullifierHash, setGlobalNullifierHash] = useState()
 
-  const [identityCommitment, setIdentityCommitment] = useState()
-  const [videoRoomId, setVideoRoomId] = useState(1)
-
-  const [roomId, setRoomId] = useState()
+  const [videoRoomId, setVideoRoomId] = useState()
 
   // setSignalBytes32 set signal?
 
   const { signer } = useWalletConnectClient()
 
-  const admin = '0x60d7D6097E5b63A29358EB462E95078f0deD78bd'
+  // const admin = '0x60d7D6097E5b63A29358EB462E95078f0deD78bd'
 
   // 1.change this for ConnectWallet
-  const SemaphoreABI = Semaphore.abi
-  const SempahoreAddress = '0x7a9aBb8C43916a9Ddcf9307e0664aC37A822a0Aa'
+  // const SemaphoreABI = Semaphore.abi
+  // const SempahoreAddress = '0x7a9aBb8C43916a9Ddcf9307e0664aC37A822a0Aa'
 
-  const semaphoreContract = new ethers.Contract(
-    SempahoreAddress,
-    SemaphoreABI,
-    signer,
-  )
+  // const semaphoreContract = new ethers.Contract(
+  //   SempahoreAddress,
+  //   SemaphoreABI,
+  //   signer,
+  // )
 
   const SFRouterABI = SFRouter.abi
   const SFRouterAddress = '0x051aCE38D708244480bAD0e50A40C6BC7B1E92dD'
@@ -105,7 +97,7 @@ function Controls({ switches, setReviewRoomId, setFlowStarted }) {
     hmsActions.leave()
   }
 
-  const permissions = useHMSStore(selectPermissions)
+  // const permissions = useHMSStore(selectPermissions)
 
   // const endRoom = async () => {
   //   //end the meeting
@@ -135,7 +127,6 @@ function Controls({ switches, setReviewRoomId, setFlowStarted }) {
     setGlobalExternalNullifier(finalNumber)
     setReviewRoomId(finalNumber)
 
-    const userAddress = await signer.getAddress()
     const body = {
       id: finalNumber,
     }
@@ -239,22 +230,22 @@ function Controls({ switches, setReviewRoomId, setFlowStarted }) {
     console.log(tx)
   }
 
-  async function onHandleCreateGroup() {
-    console.log('Create Group')
-    const groupId2 = 1001
-    const createGroup = await semaphoreContract.createGroup(
-      groupId2,
-      20,
-      0,
-      admin,
-    )
-    console.log(createGroup)
-    // let tx1 = await createGroup.wait()
-    // console.log(tx1);
+  // async function onHandleCreateGroup() {
+  //   console.log('Create Group')
+  //   const groupId2 = 1001
+  //   const createGroup = await semaphoreContract.createGroup(
+  //     groupId2,
+  //     20,
+  //     0,
+  //     admin,
+  //   )
+  //   console.log(createGroup)
+  //   // let tx1 = await createGroup.wait()
+  //   // console.log(tx1);
 
-    // const addMember = await semaphoreContract.addMember(groupId2,identityCommitment);
-    // tx1 = await addMember.wait()
-  }
+  //   // const addMember = await semaphoreContract.addMember(groupId2,identityCommitment);
+  //   // tx1 = await addMember.wait()
+  // }
 
   // async function onHandleAddMember() {
   //   console.log('Add Member')

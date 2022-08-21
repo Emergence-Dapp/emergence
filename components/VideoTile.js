@@ -1,30 +1,30 @@
-import { React, useEffect, useRef } from "react";
+import { React, useEffect, useRef } from 'react'
 import {
   useHMSActions,
   useHMSStore,
-  selectLocalPeer,
+  // selectLocalPeer,
   selectCameraStreamByPeerID,
-} from "@100mslive/react-sdk";
+} from '@100mslive/react-sdk'
 
 function VideoTile({ peer, isLocal }) {
-  const hmsActions = useHMSActions();
-  const videoRef = useRef(null);
-  const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
-  const localPeer = useHMSStore(selectLocalPeer);
-  const stage = localPeer.roleName === "stage";
-  const viewer = localPeer.roleName === "viewer";
+  const hmsActions = useHMSActions()
+  const videoRef = useRef(null)
+  const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id))
+  // const localPeer = useHMSStore(selectLocalPeer)
+  // const stage = localPeer.roleName === 'stage'
+  // const viewer = localPeer.roleName === 'viewer'
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       if (videoRef.current && videoTrack) {
         if (videoTrack.enabled) {
-          await hmsActions.attachVideo(videoTrack.id, videoRef.current);
+          await hmsActions.attachVideo(videoTrack.id, videoRef.current)
         } else {
-          await hmsActions.detachVideo(videoTrack.id, videoRef.current);
+          await hmsActions.detachVideo(videoTrack.id, videoRef.current)
         }
       }
-    })();
-  }, [hmsActions, videoTrack]);
+    })()
+  }, [hmsActions, videoTrack])
   return (
     <div>
       <video
@@ -32,13 +32,13 @@ function VideoTile({ peer, isLocal }) {
         autoPlay={true}
         playsInline
         muted={false}
-        style={{ width: "calc(85vw - 100px)" }}
+        style={{ width: 'calc(85vw - 100px)' }}
         className={`object-cover h-120 w-40 rounded-lg mt-12 shadow-lg" ${
-          isLocal ? "mirror" : ""
+          isLocal ? 'mirror' : ''
         }`}
       ></video>
     </div>
-  );
+  )
 }
 
-export default VideoTile;
+export default VideoTile

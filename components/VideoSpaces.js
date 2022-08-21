@@ -1,26 +1,25 @@
-import { React, useEffect, useRef } from "react";
+import { React, useEffect, useRef } from 'react'
 import {
   useHMSActions,
   useHMSStore,
-  selectLocalPeer,
   selectCameraStreamByPeerID,
-} from "@100mslive/react-sdk";
+} from '@100mslive/react-sdk'
 
 function VideoSpaces({ peer, islocal }) {
-  const hmsActions = useHMSActions();
-  const videoRef = useRef(null);
-  const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
+  const hmsActions = useHMSActions()
+  const videoRef = useRef(null)
+  const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id))
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       if (videoRef.current && videoTrack) {
         if (videoTrack.enabled) {
-          await hmsActions.attachVideo(videoTrack.id, videoRef.current);
+          await hmsActions.attachVideo(videoTrack.id, videoRef.current)
         } else {
-          await hmsActions.detachVideo(videoTrack.id, videoRef.current);
+          await hmsActions.detachVideo(videoTrack.id, videoRef.current)
         }
       }
-    })();
-  }, [videoTrack]);
+    })()
+  }, [videoTrack])
   return (
     <div className=" flex m-1">
       <div className="relative">
@@ -30,7 +29,7 @@ function VideoSpaces({ peer, islocal }) {
           playsInline
           muted={true}
           className={`object-cover h-40 w-40 rounded-lg mt-12 shadow-lg" ${
-            islocal ? "mirror" : ""
+            islocal ? 'mirror' : ''
           }`}
         ></video>
         <span className=" text-white font-medium text-lg uppercase">
@@ -38,7 +37,7 @@ function VideoSpaces({ peer, islocal }) {
         </span>
       </div>
     </div>
-  );
+  )
 }
 
-export default VideoSpaces;
+export default VideoSpaces

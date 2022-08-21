@@ -1,10 +1,6 @@
 import { useEffect } from 'react'
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import {
-  ClientContextProvider,
-  useWalletConnectClient,
-} from '../contexts/ClientContext.jsx'
+import { useWalletConnectClient } from '../contexts/ClientContext.jsx'
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 import WalletConnect from '@walletconnect/web3-provider'
