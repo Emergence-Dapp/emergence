@@ -1,0 +1,74 @@
+[
+    {
+        "id": "1002",
+        "joinable": true,
+        "status": "Available",
+        "purpose": "1:1 Onboarding",
+        "host": "Jake",
+        "duration": "30 min"
+    },
+    {
+        "id": "1004",
+        "joinable": false,
+        "status": "Busy",
+        "purpose": "1:1 Onboarding",
+        "host": "Priscilla",
+        "duration": "45 min left"
+    },
+    {
+        "id": "1006",
+        "joinable": true,
+        "status": "Available",
+        "purpose": "1:1 Onboarding",
+        "host": "Luana, Ian",
+        "duration": "30 min"
+    },
+    {
+        "id": "1007",
+        "joinable": true,
+        "status": "Available",
+        "purpose": "1:1 Onboarding",
+        "host": "Billy",
+        "duration": "30 min"
+    },
+    {
+        "id": "1012",
+        "joinable": true,
+        "status": "Available",
+        "purpose": "Dev Mentoring",
+        "host": "Jason",
+        "duration": "10 min left"
+    },
+    {
+        "id": "1015",
+        "joinable": false,
+        "status": "Full",
+        "purpose": "1:1 Onboarding",
+        "host": "Sarah",
+        "duration": "30 min"
+    },
+    {
+        "id": "1018",
+        "joinable": true,
+        "status": "Available",
+        "purpose": "1:1 Onboarding",
+        "host": "Ben and Amy",
+        "duration": "30 min"
+    },
+    {
+        "id": "1021",
+        "joinable": true,
+        "status": "Available",
+        "purpose": "Dev Mentoring",
+        "host": "Sally",
+        "duration": "25 min"
+    },
+    {
+        "id": "1028",
+        "joinable": true,
+        "status": "Available",
+        "purpose": "Dev Mentoring",
+        "host": "Marie",
+        "duration": "30 min"
+    }
+]

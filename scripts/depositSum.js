@@ -1,5 +1,4 @@
 const hre = require("hardhat");
-const { Framework } = require("@superfluid-finance/sdk-core");
 const { ethers } = require("hardhat");
 require("dotenv").config();
 const SFRouterABI = require("../artifacts/contracts/SFRouter.sol/SFRouter.json").abi;

@@ -1,4 +1,4 @@
-import React from "react";
+ import React from "react";
 import {useState} from "react";
 import {
   useHMSActions,
@@ -13,6 +13,8 @@ import {
 
 import {ethers} from "ethers"; 
 import Semaphore from "../../pages/utils/Semaphore.json";
+import SFRouter from "../../pages/utils/SFRouter.json";
+
 import { Identity } from "@semaphore-protocol/identity";
 import { Group } from "@semaphore-protocol/group";
 const { generateProof } =require("@semaphore-protocol/proof");
@@ -33,11 +35,13 @@ function Controls({ switches }) {
   let toggler = false;
 
   const [globalSolidityProof,setGlobalSolidityProof] = useState();
-  const [globalExternalNullifier,setGlobalExternalNullifier] = useState();
+  const [globalExternalNullifier,setGlobalExternalNullifier] = useState(1);
   const [globalNullifierHash,setGlobalNullifierHash] = useState();
   // const [signal,setSignal] = useState();
   const [identityCommitment,setIdentityCommitment] = useState();
-  const [videoRoomId,setVideoRoomId] = useState();
+  const [videoRoomId,setVideoRoomId] = useState(1);
+
+  const[roomId,setRoomId] = useState();
 
   //setSignalBytes32 set signal?
  
@@ -45,15 +49,23 @@ function Controls({ switches }) {
 
 
   const TEST_NET_PRIVATE_KEY = process.env.NEXT_PUBLIC_TEST_PRIVATE_KEY;
-  console.log(TEST_NET_PRIVATE_KEY);
-  console.log(process.env);
+  const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.g.alchemy.com/v2/5ASDGyobmyQGXsm6CYnzKOhk0OlNgo2c");
+  const signer = new ethers.Wallet(TEST_NET_PRIVATE_KEY).connect(provider);
+  const admin = '0x60d7D6097E5b63A29358EB462E95078f0deD78bd';
 
   //1.change this for ConnectWallet
   const SemaphoreABI = Semaphore.abi;
   const SempahoreAddress ="0x7a9aBb8C43916a9Ddcf9307e0664aC37A822a0Aa";
-  const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.g.alchemy.com/v2/0aWYomtIkhZ7DpFAZtNasdu74nL_ZlMf");
-  const signer = new ethers.Wallet(TEST_NET_PRIVATE_KEY).connect(provider);
-  const admin = '0xd770134156f9aB742fDB4561A684187f733A9586';
+
+  const semaphoreContract = new ethers.Contract(SempahoreAddress,SemaphoreABI,signer);
+
+
+
+  const SFRouterABI =SFRouter.abi;
+  const SFRouterAddress="0xb9DD495145Dd77663894616Ee74b204126d26ae5"
+  const sfRouterContract = new ethers.Contract(SFRouterAddress,SFRouterABI,signer);
+
+
 
   //1.Have the hashed identity + signed from backend
   const signal = "Hello ZK";
@@ -63,7 +75,6 @@ function Controls({ switches }) {
   //3.Sign Message
 
 
-  const semaphoreContract = new ethers.Contract(SempahoreAddress,SemaphoreABI,signer);
 
 
   const SwitchAudio = async () => {
@@ -97,8 +108,12 @@ function Controls({ switches }) {
   async function onHandleStartRoom(){
     console.log("create Room");
     //set VideoRoomId;
-    setVideoRoomId(10);
-    setGlobalExternalNullifier(10);
+    const startRoom = await sfRouterContract.createRoom({gasLimit: 1500000});
+    const tx = startRoom.wait();
+    console.log(startRoom)
+    console.log(tx);
+    setVideoRoomId(1);
+    setGlobalExternalNullifier(1);
     //Set room Id 
   }
 
@@ -118,7 +133,7 @@ function Controls({ switches }) {
 
     //Generate Proof
 
-    const localExternalNullifier = videoRoomId;
+    const localExternalNullifier = 1;
     // const signal = "proposal_1"
 
     const fullProof = await generateProof(newIdentity, group, localExternalNullifier, signal, {
@@ -154,6 +169,29 @@ function Controls({ switches }) {
 
     console.log(tx);
   }
+
+  async function onHandleStartFlow(){
+    console.log("On StartFlow Tx");
+    console.log(sfRouterContract);
+    // uint256 groupdId, 
+    // bytes32 signal, 
+    // uint256 nullifierHash, 
+    // uint256 externalNullifier, 
+    // uint256[8] calldata proof, 
+    // // bytes32 signedMessage, 
+    // uint256 roomId,
+    // ISuperfluidToken token,
+    // address receiver
+
+    const superFluidToken="0x91a6eCDe40B04dc49522446995916dCf491C37E4";
+
+    const startFlowTransaction = await sfRouterContract.sendTransaction(999,signalBytes32,globalNullifierHash,1,globalSolidityProof,1,superFluidToken,admin,{gasLimit: 1500000});
+    console.log(startFlowTransaction);
+    const tx = await startFlowTransaction.wait();
+
+    console.log(tx);
+  }
+
 
 
   async function onHandleCreateGroup(){
@@ -206,7 +244,13 @@ function Controls({ switches }) {
             className=" uppercase px-5 py-2 hover:bg-blue-600"
             onClick={onHandleVerifyOnChain}
           >
-            Request Funds
+            Verify On Chain
+          </button>
+          <button
+            className=" uppercase px-5 py-2 hover:bg-blue-600"
+            onClick={onHandleStartFlow}
+          >
+            Start Flow
           </button>
         <button
             className=" uppercase px-5 py-2 hover:bg-blue-600"
@@ -237,3 +281,4 @@ function Controls({ switches }) {
 }
 
 export default Controls;
+
