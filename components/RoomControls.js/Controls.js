@@ -1,4 +1,4 @@
-import React from "react";
+ import React from "react";
 import {useState} from "react";
 import { FlowingBalance } from "../FlowingBalance";
 import {
@@ -14,6 +14,8 @@ import {
 
 import {ethers} from "ethers"; 
 import Semaphore from "../../pages/utils/Semaphore.json";
+import SFRouter from "../../pages/utils/SFRouter.json";
+
 import { Identity } from "@semaphore-protocol/identity";
 import { Group } from "@semaphore-protocol/group";
 const { generateProof } =require("@semaphore-protocol/proof");
@@ -34,21 +36,23 @@ function Controls({ switches }) {
   let toggler = false;
 
   const [globalSolidityProof,setGlobalSolidityProof] = useState();
-  const [globalExternalNullifier,setGlobalExternalNullifier] = useState();
+  const [globalExternalNullifier,setGlobalExternalNullifier] = useState(1);
   const [globalNullifierHash,setGlobalNullifierHash] = useState();
   // const [signal,setSignal] = useState();
   const [identityCommitment,setIdentityCommitment] = useState();
-  const [videoRoomId,setVideoRoomId] = useState();
+  const [videoRoomId,setVideoRoomId] = useState(1);
+
+  const[roomId,setRoomId] = useState();
 
   //setSignalBytes32 set signal?
  
 
 
 
-  const TEST_NET_PRIVATE_KEY = process.env.NEXT_PUBLIC_TEST_PRIVATE_KEY;
-  const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.g.alchemy.com/v2/0aWYomtIkhZ7DpFAZtNasdu74nL_ZlMf");
+  const TEST_NET_PRIVATE_KEY = "41be2237573f80b4aa4a36292600f4f68f0805b0fb73491ec82dc69872313dfb";
+  const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.infura.io/v3/c975e1fb176d4b199e55a8180be5e1dd");
   const signer = new ethers.Wallet(TEST_NET_PRIVATE_KEY).connect(provider);
-  const admin = '0xd770134156f9aB742fDB4561A684187f733A9586';
+  const admin = '0x60d7D6097E5b63A29358EB462E95078f0deD78bd';
 
   //1.change this for ConnectWallet
   const SemaphoreABI = Semaphore.abi;
@@ -58,8 +62,8 @@ function Controls({ switches }) {
 
 
 
-  const SFRouterABI =""
-  const SFRouterAddress="0xd6Bd4Ee2849EF417A049d4b83b783F73eFccd3Bf"
+  const SFRouterABI =SFRouter.abi;
+  const SFRouterAddress="0xb9DD495145Dd77663894616Ee74b204126d26ae5"
   const sfRouterContract = new ethers.Contract(SFRouterAddress,SFRouterABI,signer);
 
 
@@ -105,8 +109,12 @@ function Controls({ switches }) {
   async function onHandleStartRoom(){
     console.log("create Room");
     //set VideoRoomId;
-    setVideoRoomId(10);
-    setGlobalExternalNullifier(10);
+    const startRoom = await sfRouterContract.createRoom({gasLimit: 1500000});
+    const tx = startRoom.wait();
+    console.log(startRoom)
+    console.log(tx);
+    setVideoRoomId(1);
+    setGlobalExternalNullifier(1);
     //Set room Id 
   }
 
@@ -126,7 +134,7 @@ function Controls({ switches }) {
 
     //Generate Proof
 
-    const localExternalNullifier = videoRoomId;
+    const localExternalNullifier = 1;
     // const signal = "proposal_1"
 
     const fullProof = await generateProof(newIdentity, group, localExternalNullifier, signal, {
@@ -164,11 +172,23 @@ function Controls({ switches }) {
   }
 
   async function onHandleStartFlow(){
-    console.log("On Chain Verification Tx");
+    console.log("On StartFlow Tx");
+    console.log(sfRouterContract);
+    // uint256 groupdId, 
+    // bytes32 signal, 
+    // uint256 nullifierHash, 
+    // uint256 externalNullifier, 
+    // uint256[8] calldata proof, 
+    // // bytes32 signedMessage, 
+    // uint256 roomId,
+    // ISuperfluidToken token,
+    // address receiver
 
-    const checkMembership = await semaphoreContract.verifyProof(999,signalBytes32,globalNullifierHash,globalExternalNullifier,globalSolidityProof,{gasLimit: 1500000});
-    console.log(checkMembership);
-    const tx = await checkMembership.wait();
+    const superFluidToken="0x91a6eCDe40B04dc49522446995916dCf491C37E4";
+
+    const startFlowTransaction = await sfRouterContract.sendTransaction(999,signalBytes32,globalNullifierHash,1,globalSolidityProof,1,superFluidToken,{gasLimit: 1500000});
+    console.log(startFlowTransaction);
+    const tx = await startFlowTransaction.wait();
 
     console.log(tx);
   }
@@ -263,3 +283,4 @@ function Controls({ switches }) {
 }
 
 export default Controls;
+
