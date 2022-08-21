@@ -73,29 +73,33 @@ function Login({ roomId }) {
   return (
     <>
       {!isConnected ? (
-        <div className=" h-screen flex justify-center items-center bg-slate-800">
+        <div className=" h-screen flex justify-center items-center bg-brand-dark">
           <div className=" flex flex-col gap-6 -mt-20">
-            <h1 className="text-gray-200 max-w-lg text-2xl">
-              Atention! In the end of this meeting, a transcription of the
-              meeting will be generated, all participants will remain anonymous.
-            </h1>
+            <h1 className="text-gray-100 max-w-lg text-2xl font-semibold flex justify-center">Welcome!</h1>
+            <p className="text-gray-300 max-w-lg text-2xl flex justify-center">
+              Please be aware: At the end of this meeting, a transcript of the
+              session will be generated. 
+            </p>
+            <p className="text-gray-300 max-w-lg text-2xl">All participants will remain anonymous.</p>
             <input
               type="text"
               placeholder="Name"
               value={inputValues}
               onChange={handleInputChange}
-              className=" focus:outline-none flex-1 px-2 py-3 rounded-md text-black border-2 border-blue-600"
+              className=" focus:outline-none flex-1 px-2 py-3 rounded-md text-black"
             />
             <button
-              className="flex-1 text-white bg-blue-600 py-3 px-10 rounded-md"
+              className="flex-1 btn-primary"
               onClick={handleSubmit}
             >
+              {/* flex-1 text-white bg-blue-600 py-3 px-10 rounded-md */}
               Join Room
             </button>
             <Link href="/">
-              <button className="flex-1 text-white  bg-rose-500 py-3 px-10 rounded-md">
+              <button className="flex-1 btn-secondary">
                 Leave
               </button>
+              {/* flex-1 text-white  bg-rose-500 py-3 px-10 rounded-md */}
             </Link>
           </div>
         </div>

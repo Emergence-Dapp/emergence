@@ -35,17 +35,17 @@ export const Header = () => {
             home
           </a>
           <a
-            href={'/'}
+            href={'/admin'}
             className="text-brand-light text-2xl lowercase font-semibold tracking-tighter inline"
           >
             admin
           </a>
-          <a
+          {/* <a
             href={'/'}
             className="text-brand-light text-2xl lowercase font-semibold tracking-tighter inline"
           >
             transcripts
-          </a>
+          </a> */}
           <div className="float-right">
             {signer ? (
               <span className="btn-secondary text-brand-light truncate w-44">
