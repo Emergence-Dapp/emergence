@@ -20,7 +20,7 @@ function Room({ roomId }) {
 
   console.log(roomId)
   const [inputValues, setInputValues] = React.useState('')
-  const [visible, isVisible] = React.useState(false)
+  // const [visible, isVisible] = React.useState(false)
   const [reviewRoomId, setReviewRoomId] = React.useState()
   const [flowStarted, setFlowStarted] = React.useState()
   const handleInputChange = (e) => {
@@ -32,9 +32,9 @@ function Room({ roomId }) {
     setInputValues('')
   }
 
-  const setVisibility = (dat) => {
-    isVisible(dat)
-  }
+  // const setVisibility = (dat) => {
+  //   isVisible(dat)
+  // }
   // Change Rating
   function onHandleSubmitReview() {
     const finalNumber = reviewRoomId
@@ -105,7 +105,7 @@ function Room({ roomId }) {
             <div className="w-max px-1 mb-7 bg-slate-500 h-12 rounded-md z-20 flex justify-end">
               {/* Controls */}
               <Controls
-                switches={setVisibility}
+                // switches={setVisibility}
                 setReviewRoomId={setReviewRoomId}
                 setFlowStarted={setFlowStarted}
               />

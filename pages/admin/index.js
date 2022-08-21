@@ -1,15 +1,12 @@
-
-import { Header } from "../../components/Header";
-import axios from 'axios';
-import { useWalletConnectClient } from '../../contexts/ClientContext.jsx';
-import { useEffect, useState } from 'react';
-import meetings from '../../data/meetings.json';
-
+import { Header } from '../../components/Header'
+import axios from 'axios'
+import { useWalletConnectClient } from '../../contexts/ClientContext.jsx'
+import { useState } from 'react'
+import meetings from '../../data/meetings.json'
 
 const DATA_URL = 'https://emergence-gamma.vercel.app/api/transcriptions'
 
-
-let transcriptId, status;
+let transcriptId, status
 
 const assembly = axios.create({
   baseURL: 'https://api.assemblyai.com/v2',
