@@ -8,7 +8,8 @@
         "paid": "102",
         "denomination": "EMG Tokens",
         "date": "8/21/2022",
-        "duration": "31 min"
+        "duration": "31 min",
+        "attendees": "4"
     },
     {
         "id": "1004",
@@ -19,7 +20,8 @@
         "paid": "0",
         "denomination": "EMG tokens",
         "date": "8/21/2022",
-        "duration": "12 min"
+        "duration": "12 min",
+        "attendees": "2"
     },
     {
         "id": "1005",
@@ -30,7 +32,8 @@
         "paid": "76",
         "denomination": "EMG tokens",
         "date": "8/20/2022",
-        "duration": "55 min"
+        "duration": "55 min",
+        "attendees": "2"
     },
     {
         "id": "1006",
@@ -41,7 +44,8 @@
         "paid": "76",
         "denomination": "EMG tokens",
         "date": "8/20/2022",
-        "duration": "43 min"
+        "duration": "43 min",
+        "attendees": "6"
     },   
     {
         "id": "1003",
@@ -52,6 +56,7 @@
         "paid": "76",
         "denomination": "EMG tokens",
         "date": "8/20/2022",
-        "duration": "22 min"
+        "duration": "22 min",
+        "attendees": "2"
     }
 ]

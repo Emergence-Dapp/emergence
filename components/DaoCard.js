@@ -4,7 +4,8 @@ export const DaoCard = ({data}) => {
         <div className="min-w-max place-items-center antialiased text-gray-900"> 
             {/* style={{ 'height':'60vh',}} */}
             <div>
-                <img src={"https://source.unsplash.com/random/350x350?sig=" + Math.floor((Math.random() * 10000))} alt=" random imgee" className="w-full object-cover object-center rounded-lg shadow-md" /> 
+                <img src={data.logo} alt=" random imgee" className="w-full object-cover object-center rounded-lg shadow-md" /> 
+                {/* {"https://source.unsplash.com/random/350x350?sig=" + Math.floor((Math.random() * 10000))} */}
                 <div className="relative px-4 -mt-16">
                     <div className="bg-brand-med-dark text-white p-6 rounded-lg shadow-lg">
                         <div className="flex items-baseline">

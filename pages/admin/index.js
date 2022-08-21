@@ -60,7 +60,7 @@ export default function AdminPage({ meetingData }) {
             <div className="w-full sm:px-6">
                 <div className="px-4 md:px-10 py-4 md:py-7 bg-brand-med-dark rounded-tl-lg rounded-tr-lg">
                     <div className="sm:flex items-center justify-between">
-                        <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-100">Meetings</p>
+                        <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-100">Sessions</p>
                     </div>
                 </div>
                 <div className="bg-white shadow px-4 md:px-10 pt-4 md:pt-7 pb-5 overflow-y-auto">
@@ -86,7 +86,7 @@ export default function AdminPage({ meetingData }) {
                                         </div>
                                         <div className="pl-4">
                                             <p className="font-medium uppercase">{item.name}</p>
-                                            <p className="text-xs leading-3 text-gray-600 pt-2">Meeting id# {item.id}</p>
+                                            <p className="text-xs leading-3 text-gray-600 pt-2">Session id# {item.id}</p>
                                         </div>
                                     </div>
                                 </td>                                
@@ -128,10 +128,10 @@ export default function AdminPage({ meetingData }) {
                                     </button>
                                     }
                                    {show==index &&  <div className="dropdown-content bg-white shadow w-24 absolute z-30 right-10 mr-6 ">
-                                        <div className="text-xs w-full hover:bg-indigo-700 py-4 px-4 cursor-pointer hover:text-white">
+                                        <div className="text-xs w-full hover:bg-brand-light py-4 px-4 cursor-pointer">
                                             <p onClick={postTranscriptForProcessing}>Analysis</p>
                                         </div>
-                                        <div className="text-xs w-full hover:bg-indigo-700 py-4 px-4 cursor-pointer hover:text-white">
+                                        <div className="text-xs w-full hover:bg-brand-light py-4 px-4 cursor-pointer">
                                             <p>Feedback</p>
                                         </div>
                                     </div>}
