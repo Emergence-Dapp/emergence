@@ -1,11 +1,13 @@
-import { useEffect } from 'react';
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import { ClientContextProvider, useWalletConnectClient } from '../contexts/ClientContext.jsx';
-import { ethers } from "ethers";
-import Web3Modal from "web3modal";
-import WalletConnect from '@walletconnect/web3-provider';
-
+import { useEffect } from 'react'
+import Head from 'next/head'
+import styles from '../styles/Home.module.css'
+import {
+  ClientContextProvider,
+  useWalletConnectClient,
+} from '../contexts/ClientContext.jsx'
+import { ethers } from 'ethers'
+import Web3Modal from 'web3modal'
+import WalletConnect from '@walletconnect/web3-provider'
 
 // import WalletConnectProvider from "@walletconnect/web3-provider";
 // import { providers } from "ethers";
@@ -17,42 +19,42 @@ import WalletConnect from '@walletconnect/web3-provider';
 //   bridge: "https://bridge.walletconnect.org", // Required
 //   qrcodeModal: QRCodeModal,
 // });
-// 
+//
 // // Check if connection is already established
 // if (!connector.connected) {
 //   // create new session
 //   connector.createSession();
 // }
-// 
+//
 // // Subscribe to connection events
 // connector.on("connect", (error, payload) => {
 //   if (error) {
 //     throw error;
 //   }
 //   console.log('connect');
-// 
+//
 //   // Get provided accounts and chainId
 //   const { accounts, chainId } = payload.params[0];
 //   console.log(payload);
 // });
-// 
+//
 // connector.on("session_update", (error, payload) => {
 //   console.log('session_update');
 //   if (error) {
 //     throw error;
 //   }
-// 
+//
 //   // Get updated accounts and chainId
 //   const { accounts, chainId } = payload.params[0];
 //   console.log(payload);
 // });
-// 
+//
 // connector.on("disconnect", (error, payload) => {
 //   console.log('disconnect');
 //   if (error) {
 //     throw error;
 //   }
-// 
+//
 //   // Delete connector
 // });
 
@@ -63,17 +65,17 @@ import WalletConnect from '@walletconnect/web3-provider';
 // //  Wrap with Web3Provider from ethers.js
 // const web3Provider = new providers.Web3Provider(provider);
 // console.log({ web3Provider });
-// 
+//
 // // Subscribe to accounts change
 // provider.on("accountsChanged", (accounts) => {
 //   console.log({ accounts });
 // });
-// 
+//
 // // Subscribe to chainId change
 // provider.on("chainChanged", (chainId) => {
 //   console.log({ chainId });
 // });
-// 
+//
 // // Subscribe to session disconnection
 // provider.on("disconnect", (code, reason) => {
 //   console.log({ code, reason });
@@ -81,7 +83,7 @@ import WalletConnect from '@walletconnect/web3-provider';
 
 export default function Wallet() {
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       //  Enable session (triggers QR Code modal)
       const providerOptions = {
         /* See Provider Options Section */
@@ -89,45 +91,45 @@ export default function Wallet() {
           walletconnect: {
             package: WalletConnect, // required
             options: {
-              infuraId: 'ea6a2008599c409000bc489a5f3d339d'
-            }
-          }
-        }
-      };
+              infuraId: 'ea6a2008599c409000bc489a5f3d339d',
+            },
+          },
+        },
+      }
 
       const web3Modal = new Web3Modal({
-        network: "mainnet", // optional
+        network: 'mainnet', // optional
         cacheProvider: true, // optional
-        providerOptions // required
-      });
+        providerOptions, // required
+      })
 
-      const instance = await web3Modal.connect();
-      const provider = new ethers.providers.Web3Provider(instance);
-      const signer = provider.getSigner();
-      console.log({ signer });
+      const instance = await web3Modal.connect()
+      const provider = new ethers.providers.Web3Provider(instance)
+      const signer = provider.getSigner()
+      console.log({ signer })
       // Subscribe to accounts change
-      provider.on("accountsChanged", (accounts) => {
-        console.log(accounts);
-      });
+      provider.on('accountsChanged', (accounts) => {
+        console.log(accounts)
+      })
 
       // Subscribe to chainId change
-      provider.on("chainChanged", (chainId) => {
-        console.log(chainId);
-      });
+      provider.on('chainChanged', (chainId) => {
+        console.log(chainId)
+      })
 
       // Subscribe to provider connection
-      provider.on("connect", (info) => {
-        console.log(info);
-      });
+      provider.on('connect', (info) => {
+        console.log(info)
+      })
 
       // Subscribe to provider disconnection
-      provider.on("disconnect", (error) => {
-        console.log(error);
-      });
-      await provider.enable();
-    })();
-  }, []);
-  const { connect, disconnect } = useWalletConnectClient();
+      provider.on('disconnect', (error) => {
+        console.log(error)
+      })
+      await provider.enable()
+    })()
+  }, [])
+  const { connect, disconnect } = useWalletConnectClient()
 
   return (
     <>
@@ -150,5 +152,5 @@ export default function Wallet() {
         disconnect
       </button>
     </>
-  );
+  )
 }
