@@ -24,20 +24,16 @@ const { generateProof } = require('@semaphore-protocol/proof')
 const { verifyProof } = require('@semaphore-protocol/proof')
 const { packToSolidityProof } = require('@semaphore-protocol/proof')
 
-function Controls({ switches, setReviewRoomId }) {
+function Controls({ switches, setReviewRoomId, setFlowStarted }) {
   const hmsActions = useHMSActions()
-  // const localPeer = useHMSStore(selectLocalPeer)
-  // const stage = localPeer.roleName === 'stage'
-  // const peers = useHMSStore(selectPeers)
+
   const isLocalAudioEnabled = useHMSStore(selectIsLocalAudioEnabled)
   const isLocalVideoEnabled = useHMSStore(selectIsLocalVideoEnabled)
-  // const isLocalScreenShared = useHMSStore(selectIsLocalScreenShared)
-  // const toggler = false
 
   const [globalSolidityProof, setGlobalSolidityProof] = useState()
   const [globalExternalNullifier, setGlobalExternalNullifier] = useState(1)
   const [globalNullifierHash, setGlobalNullifierHash] = useState()
-  // const [signal,setSignal] = useState();
+
   const [identityCommitment, setIdentityCommitment] = useState()
   const [videoRoomId, setVideoRoomId] = useState(1)
 
@@ -47,12 +43,6 @@ function Controls({ switches, setReviewRoomId }) {
 
   const { signer } = useWalletConnectClient()
 
-  // const TEST_NET_PRIVATE_KEY =
-  //   '41be2237573f80b4aa4a36292600f4f68f0805b0fb73491ec82dc69872313dfb'
-  // const provider = new ethers.providers.JsonRpcProvider(
-  //   'https://polygon-mumbai.infura.io/v3/c975e1fb176d4b199e55a8180be5e1dd',
-  // )
-  // const signer = new ethers.Wallet(TEST_NET_PRIVATE_KEY).connect(provider)
   const admin = '0x60d7D6097E5b63A29358EB462E95078f0deD78bd'
 
   // 1.change this for ConnectWallet
@@ -73,12 +63,8 @@ function Controls({ switches, setReviewRoomId }) {
     signer,
   )
 
-  // 1.Have the hashed identity + signed from backend
   const signal = 'Hello ZK'
   const signalBytes32 = ethers.utils.formatBytes32String(signal)
-  // 2.Have the ExternalNullifier as the roomId
-
-  // 3.Sign Message
 
   const SwitchAudio = async () => {
     // toggle audio enabled
@@ -91,14 +77,22 @@ function Controls({ switches, setReviewRoomId }) {
   }
 
   const ExitRoom = async () => {
-    // const roomNumber = videoRoomId
-    // const closeRoom = await sfRouterContract.closeRoom(roomNumber, {
-    //   gasLimit: 1500000,
-    // })
-    // await closeRoom.wait()
-    const userAddress = await signer.getAddress()
+    const userAddress = '0x60d7D6097E5b63A29358EB462E95078f0deD78bd'
+    // const roomNumber = 6
+    // const closeFlow = await sfRouterContract.closeRoom(
+    //   roomNumber,
+    //   SFRouterAddress,
+    //   userAddress,
+    //   4,
+    //   4,
+    //   {
+    //     gasLimit: 1500000,
+    //   },
+    // )
+    // await closeFlow.wait()
+
     const body = {
-      id: 10,
+      id: videoRoomId,
       daoMemberAddress: userAddress,
     }
 
@@ -108,7 +102,7 @@ function Controls({ switches, setReviewRoomId }) {
       body: JSON.stringify(body),
     })
     console.log('Closed')
-    // hmsActions.leave()
+    hmsActions.leave()
   }
 
   const permissions = useHMSStore(selectPermissions)
@@ -128,23 +122,22 @@ function Controls({ switches, setReviewRoomId }) {
   async function onHandleStartRoom() {
     console.log('create Room')
     // set VideoRoomId;
-    // const startRoom = await sfRouterContract.createRoom({ gasLimit: 1500000 })
-    // await startRoom.wait()
+    const startRoom = await sfRouterContract.createRoom({ gasLimit: 1500000 })
+    await startRoom.wait()
 
-    // const rmNum = await sfRouterContract.roomNumber()
-    // const finalNumber = rmNum.toString(10)
+    const rmNum = await sfRouterContract.roomNumber()
+    const finalNumber = rmNum.toString(10)
 
-    // console.log(rmNum)
-    // console.log(finalNumber)
+    console.log(rmNum)
+    console.log(finalNumber)
 
-    // setVideoRoomId(finalNumber)
-    // setGlobalExternalNullifier(finalNumber)
-    // setReviewRoomId(finalNumber)
+    setVideoRoomId(finalNumber)
+    setGlobalExternalNullifier(finalNumber)
+    setReviewRoomId(finalNumber)
 
-    // const testNumber = 10
     const userAddress = await signer.getAddress()
     const body = {
-      id: 10,
+      id: finalNumber,
     }
 
     fetch('https://emergence-dapp.herokuapp.com/open-meeting', {
@@ -172,7 +165,6 @@ function Controls({ switches, setReviewRoomId }) {
 
     // Generate Proof
 
-    const localExternalNullifier = 1
     // const signal = "proposal_1"
 
     const fullProof = await generateProof(
@@ -226,15 +218,6 @@ function Controls({ switches, setReviewRoomId }) {
   async function onHandleStartFlow() {
     console.log('On StartFlow Tx')
     console.log(sfRouterContract)
-    // uint256 groupdId,
-    // bytes32 signal,
-    // uint256 nullifierHash,
-    // uint256 externalNullifier,
-    // uint256[8] calldata proof,
-    // // bytes32 signedMessage,
-    // uint256 roomId,
-    // ISuperfluidToken token,
-    // address receiver
 
     const superFluidToken = '0x91a6eCDe40B04dc49522446995916dCf491C37E4'
 
@@ -250,6 +233,8 @@ function Controls({ switches, setReviewRoomId }) {
     )
     console.log(startFlowTransaction)
     const tx = await startFlowTransaction.wait()
+
+    setFlowStarted(tx)
 
     console.log(tx)
   }
@@ -292,18 +277,20 @@ function Controls({ switches, setReviewRoomId }) {
       >
         {isLocalAudioEnabled ? 'Off Audio' : 'On Audio'}
       </button>
-      <button
-        className=" uppercase px-5 py-2 hover:bg-blue-600"
-        onClick={ExitRoom}
-      >
-        Exit Meeting
-      </button>
-      <button
-        className=" uppercase px-5 py-2 hover:bg-blue-600"
-        onClick={onHandleStartRoom}
-      >
-        Open Room
-      </button>
+
+      {videoRoomId ? (
+        <button className=" uppercase px-5 py-2 hover:bg-blue-600">
+          Room Id {videoRoomId}
+        </button>
+      ) : (
+        <button
+          className=" uppercase px-5 py-2 hover:bg-blue-600"
+          onClick={onHandleStartRoom}
+        >
+          Open Room
+        </button>
+      )}
+
       {globalSolidityProof ? (
         <button
           className=" uppercase px-5 py-2 hover:bg-blue-600"
@@ -319,6 +306,12 @@ function Controls({ switches, setReviewRoomId }) {
           Generate Proof
         </button>
       )}
+      <button
+        className=" uppercase px-5 py-2 hover:bg-blue-600"
+        onClick={ExitRoom}
+      >
+        Exit Meeting
+      </button>
 
       {/* <FlowingBalance /> */}
       {/* <button
