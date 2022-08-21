@@ -1,6 +1,6 @@
 [
     {
-        "id": "1",
+        "id": "1002",
         "name": "Room 1",
         "rating": "4.5",
         "purpose": "1:1 meeting",
@@ -12,7 +12,7 @@
         "attendees": "4"
     },
     {
-        "id": "2",
+        "id": "1004",
         "name": "Room 8",
         "rating": "5.0",
         "purpose": "1:1 meeting",
@@ -24,7 +24,7 @@
         "attendees": "2"
     },
     {
-        "id": "3",
+        "id": "1005",
         "name": "Room 7",
         "rating": "3.5",
         "purpose": "Group meeting",
@@ -36,7 +36,7 @@
         "attendees": "2"
     },
     {
-        "id": "4",
+        "id": "1006",
         "name": "Room 9",
         "rating": "4.2",
         "purpose": "Group meeting",
@@ -48,7 +48,7 @@
         "attendees": "6"
     },   
     {
-        "id": "5",
+        "id": "1003",
         "name": "Room 3",
         "rating": "4.0",
         "purpose": "1:1 meeting",
