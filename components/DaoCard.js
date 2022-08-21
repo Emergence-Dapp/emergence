@@ -24,7 +24,7 @@ export const DaoCard = ({data}) => {
                             <span className="text-teal-600 text-md font-semibold">4/5 ratings </span>
                             <span className="text-sm text-gray-600">(based on 234 ratings)</span>
                         </div> */}
-                        <a href="#" className="btn-primary mt-6 mb-3">View Rooms</a>
+                        <a href={"room-list/" + data.id} className="btn-primary mt-6 mb-3">View Rooms</a>
                     </div>
                 </div>
             </div>

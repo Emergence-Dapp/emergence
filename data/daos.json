@@ -1,47 +1,55 @@
 [
     {
+        "id": 1,
         "name": "Uniswap",
         "status": "12 available rooms",
         "logo": "nouns.png",
         "website": "https://uniswap.org/"
     },
     {
+        "id": 2,
         "name": "ApeCoin",
         "status": "14 available rooms",
         "logo": "nouns.png",
         "website": "https://apecoin.com/"
     },
     {
+        "id": 3,
         "name": "Aave",
         "status": "10 available rooms",
         "logo": "nouns.png",
         "website": "https://aave.com/"
     },
     {
+        "id": 4,
         "name": "MakerDAO",
         "status": "12 available rooms",
         "logo": "nouns.png",
         "website": "https://makerdao.com/"
     },
     {
+        "id": 5,
         "name": "Lido",
         "status": "9 available rooms",
         "logo": "nouns.png",
         "website": "https://lido.fi/"
     },
     {
+        "id": 6,
         "name": "CurveDAO Token",
         "status": "9 available rooms",
         "logo": "nouns.png",
         "website": "https://www.curve.fi/"
     },
    {
+        "id": 7,    
         "name": "Dash",
         "status": "7 available rooms",
         "logo": "nouns.png",
         "website": "https://www.dash.org/"
     },
    {
+        "id": 8,    
         "name": "Decred",
         "status": "10 available rooms",
         "logo": "nouns.png",
