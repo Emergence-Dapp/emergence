@@ -39,7 +39,7 @@ export default async function handler(req, res) {
         method
     } = req
 
-    console.log({ method, type });
+    console.log({ method, type, data });
     if (method == 'POST') {
         if (type == 'recording.success') {
             const videoUrl = data.URL;
@@ -70,7 +70,7 @@ export default async function handler(req, res) {
             };
 
             const resp = await axios.request(options);
-            console.log({ data: resp.data });
+            // console.log({ data: resp.data });
             return res.status(200).send('meeting started');
         } else if (type == 'session.close.success') {
             const authKey = await getManagementKey()
@@ -88,7 +88,7 @@ export default async function handler(req, res) {
             };
 
             const resp = await axios.request(options);
-            console.log({ data: resp.data });
+            // console.log({ data: resp.data });
             return res.status(200).send('meeting stoped');
         } else if (type == 'beam.recording.success') {
             console.log({ location: data.location });
