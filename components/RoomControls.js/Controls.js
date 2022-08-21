@@ -45,15 +45,23 @@ function Controls({ switches }) {
 
 
   const TEST_NET_PRIVATE_KEY = process.env.NEXT_PUBLIC_TEST_PRIVATE_KEY;
-  console.log(TEST_NET_PRIVATE_KEY);
-  console.log(process.env);
+  const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.g.alchemy.com/v2/0aWYomtIkhZ7DpFAZtNasdu74nL_ZlMf");
+  const signer = new ethers.Wallet(TEST_NET_PRIVATE_KEY).connect(provider);
+  const admin = '0xd770134156f9aB742fDB4561A684187f733A9586';
 
   //1.change this for ConnectWallet
   const SemaphoreABI = Semaphore.abi;
   const SempahoreAddress ="0x7a9aBb8C43916a9Ddcf9307e0664aC37A822a0Aa";
-  const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.g.alchemy.com/v2/0aWYomtIkhZ7DpFAZtNasdu74nL_ZlMf");
-  const signer = new ethers.Wallet(TEST_NET_PRIVATE_KEY).connect(provider);
-  const admin = '0xd770134156f9aB742fDB4561A684187f733A9586';
+
+  const semaphoreContract = new ethers.Contract(SempahoreAddress,SemaphoreABI,signer);
+
+
+
+  const SFRouterABI =""
+  const SFRouterAddress="0xd6Bd4Ee2849EF417A049d4b83b783F73eFccd3Bf"
+  const sfRouterContract = new ethers.Contract(SFRouterAddress,SFRouterABI,signer);
+
+
 
   //1.Have the hashed identity + signed from backend
   const signal = "Hello ZK";
@@ -63,7 +71,6 @@ function Controls({ switches }) {
   //3.Sign Message
 
 
-  const semaphoreContract = new ethers.Contract(SempahoreAddress,SemaphoreABI,signer);
 
 
   const SwitchAudio = async () => {
@@ -155,6 +162,17 @@ function Controls({ switches }) {
     console.log(tx);
   }
 
+  async function onHandleStartFlow(){
+    console.log("On Chain Verification Tx");
+
+    const checkMembership = await semaphoreContract.verifyProof(999,signalBytes32,globalNullifierHash,globalExternalNullifier,globalSolidityProof,{gasLimit: 1500000});
+    console.log(checkMembership);
+    const tx = await checkMembership.wait();
+
+    console.log(tx);
+  }
+
+
 
   async function onHandleCreateGroup(){
     console.log("Create Group");
@@ -206,7 +224,13 @@ function Controls({ switches }) {
             className=" uppercase px-5 py-2 hover:bg-blue-600"
             onClick={onHandleVerifyOnChain}
           >
-            Request Funds
+            Verify On Chain
+          </button>
+          <button
+            className=" uppercase px-5 py-2 hover:bg-blue-600"
+            onClick={onHandleStartFlow}
+          >
+            Start Flow
           </button>
         <button
             className=" uppercase px-5 py-2 hover:bg-blue-600"
