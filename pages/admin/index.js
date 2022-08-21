@@ -1,53 +1,59 @@
+
 import { Header } from "../../components/Header";
 import axios from 'axios';
 import { useWalletConnectClient } from '../../contexts/ClientContext.jsx';
 import { useEffect, useState } from 'react';
 import meetings from '../../data/meetings.json';
 
-const DATA_URL = 'https://emergence-gamma.vercel.app/api/transcriptions';
+
+const DATA_URL = 'https://emergence-gamma.vercel.app/api/transcriptions'
+
 
 let transcriptId, status;
-  
+
 const assembly = axios.create({
-    baseURL: "https://api.assemblyai.com/v2",
-    headers: {
-        authorization: "57c79d44298443588fe6f4e29249633c",
-        "content-type": "application/json",
-    },
-});
+  baseURL: 'https://api.assemblyai.com/v2',
+  headers: {
+    authorization: '57c79d44298443588fe6f4e29249633c',
+    'content-type': 'application/json',
+  },
+})
 
 function getTranscriptResult() {
-    assembly
+  assembly
     .get(`/transcript/${transcriptId}`)
     .then((res) => {
-        console.log(res.data);
-        status = res.data.status;
+      console.log(res.data)
+      status = res.data.status
     })
-    .catch((err) => console.error(err));
-    if(status !== 'completed') {
-        setTimeout(getTranscriptResult, 5000);        
-    }
+    .catch((err) => console.error(err))
+  if (status !== 'completed') {
+    setTimeout(getTranscriptResult, 5000)
+  }
 }
 
 function postTranscriptForProcessing() {
-    assembly
-    .post("/transcript", {
-        audio_url: "https://bit.ly/3yxKEIY"
+  assembly
+    .post('/transcript', {
+      audio_url: 'https://bit.ly/3yxKEIY',
     })
     .then((res) => {
-        console.log(res.data);
-        transcriptId = res.data.id;
-        status = res.data.status;
+      console.log(res.data)
+      transcriptId = res.data.id
+      status = res.data.status
     })
-    .catch((err) => console.error(err));
-    if(status !== 'completed') {
-        setTimeout(getTranscriptResult, 5000);        
-    }
+    .catch((err) => console.error(err))
+  if (status !== 'completed') {
+    setTimeout(getTranscriptResult, 5000)
+  }
 }
 
 // postTranscriptForProcessing();
 
 export default function AdminPage({ meetingData }) {
+  const { connect, signer, accounts } = useWalletConnectClient()
+  console.log('checking signer', signer)
+
 
     const { connect, signer, accounts } = useWalletConnectClient();
     console.log("checking signer", signer);
@@ -59,6 +65,7 @@ export default function AdminPage({ meetingData }) {
             <Header />
             <div className="w-full sm:px-6">
                 <div className="px-4 md:px-10 py-4 md:py-7 bg-brand-med-dark rounded-tl-lg rounded-tr-lg">
+
                     <div className="sm:flex items-center justify-between">
                         <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-100">Sessions</p>
                     </div>
@@ -141,6 +148,7 @@ export default function AdminPage({ meetingData }) {
                         </tbody>
                     </table>
                 </div> 
+
             </div> 
         </>
     );
@@ -156,6 +164,8 @@ export async function getServerSideProps() {
     catch(err) {console.log("Error fetching data", err);}
     console.log("Meeting data", meetingData);
     return { props: { meetingData } };
-  }
-  
 
+  }
+  console.log('Meeting data', meetingData)
+  return { props: { meetingData } }
+}

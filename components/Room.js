@@ -21,6 +21,7 @@ function Room({ roomId }) {
   console.log(roomId)
   const [inputValues, setInputValues] = React.useState('')
   const [visible, isVisible] = React.useState(false)
+  const [reviewRoomId, setReviewRoomId] = React.useState()
   const handleInputChange = (e) => {
     setInputValues(e.target.value)
   }
@@ -32,6 +33,20 @@ function Room({ roomId }) {
 
   const setVisibility = (dat) => {
     isVisible(dat)
+  }
+  function onHandleSubmitReview() {
+    const finalNumber = 10
+    const body = {
+      id: finalNumber,
+      rating: 4,
+    }
+
+    fetch('https://emergence-dapp.herokuapp.com/submit-rating', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    console.log('Submited')
   }
   // let colsNumber=0;
   // if(peers.length > 1){
@@ -75,14 +90,22 @@ function Room({ roomId }) {
                       <option value="4">4 STARS</option>
                       <option value="5">5 STARS</option>
                     </select>
-                    <button className="hover:bg-blue-600">Submit</button>
+                    <button
+                      className="hover:bg-blue-600"
+                      onClick={onHandleSubmitReview}
+                    >
+                      Submit
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
             <div className="w-max px-1 mb-7 bg-slate-500 h-12 rounded-md z-20 flex justify-end">
               {/* Controls */}
-              <Controls switches={setVisibility} />
+              <Controls
+                switches={setVisibility}
+                setReviewRoomId={setReviewRoomId}
+              />
             </div>
           </span>
         </span>

@@ -18,11 +18,13 @@ import SFRouter from '../../pages/utils/SFRouter.json'
 import { Identity } from '@semaphore-protocol/identity'
 import { Group } from '@semaphore-protocol/group'
 import 'dotenv/config'
+
+import { useWalletConnectClient } from '../../contexts/ClientContext.jsx'
 const { generateProof } = require('@semaphore-protocol/proof')
 const { verifyProof } = require('@semaphore-protocol/proof')
 const { packToSolidityProof } = require('@semaphore-protocol/proof')
 
-function Controls({ switches }) {
+function Controls({ switches, setReviewRoomId }) {
   const hmsActions = useHMSActions()
   // const localPeer = useHMSStore(selectLocalPeer)
   // const stage = localPeer.roleName === 'stage'
@@ -43,12 +45,14 @@ function Controls({ switches }) {
 
   // setSignalBytes32 set signal?
 
-  const TEST_NET_PRIVATE_KEY =
-    '41be2237573f80b4aa4a36292600f4f68f0805b0fb73491ec82dc69872313dfb'
-  const provider = new ethers.providers.JsonRpcProvider(
-    'https://polygon-mumbai.infura.io/v3/c975e1fb176d4b199e55a8180be5e1dd',
-  )
-  const signer = new ethers.Wallet(TEST_NET_PRIVATE_KEY).connect(provider)
+  const { signer } = useWalletConnectClient()
+
+  // const TEST_NET_PRIVATE_KEY =
+  //   '41be2237573f80b4aa4a36292600f4f68f0805b0fb73491ec82dc69872313dfb'
+  // const provider = new ethers.providers.JsonRpcProvider(
+  //   'https://polygon-mumbai.infura.io/v3/c975e1fb176d4b199e55a8180be5e1dd',
+  // )
+  // const signer = new ethers.Wallet(TEST_NET_PRIVATE_KEY).connect(provider)
   const admin = '0x60d7D6097E5b63A29358EB462E95078f0deD78bd'
 
   // 1.change this for ConnectWallet
@@ -62,7 +66,7 @@ function Controls({ switches }) {
   )
 
   const SFRouterABI = SFRouter.abi
-  const SFRouterAddress = '0xb9DD495145Dd77663894616Ee74b204126d26ae5'
+  const SFRouterAddress = '0x051aCE38D708244480bAD0e50A40C6BC7B1E92dD'
   const sfRouterContract = new ethers.Contract(
     SFRouterAddress,
     SFRouterABI,
@@ -86,8 +90,25 @@ function Controls({ switches }) {
     await hmsActions.setLocalVideoEnabled(!isLocalVideoEnabled)
   }
 
-  const ExitRoom = () => {
-    hmsActions.leave()
+  const ExitRoom = async () => {
+    // const roomNumber = videoRoomId
+    // const closeRoom = await sfRouterContract.closeRoom(roomNumber, {
+    //   gasLimit: 1500000,
+    // })
+    // await closeRoom.wait()
+    const userAddress = await signer.getAddress()
+    const body = {
+      id: 10,
+      daoMemberAddress: userAddress,
+    }
+
+    fetch('https://emergence-dapp.herokuapp.com/close-meeting', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    console.log('Closed')
+    // hmsActions.leave()
   }
 
   const permissions = useHMSStore(selectPermissions)
@@ -107,12 +128,32 @@ function Controls({ switches }) {
   async function onHandleStartRoom() {
     console.log('create Room')
     // set VideoRoomId;
-    const startRoom = await sfRouterContract.createRoom({ gasLimit: 1500000 })
-    const tx = startRoom.wait()
-    console.log(startRoom)
-    console.log(tx)
-    setVideoRoomId(1)
-    setGlobalExternalNullifier(1)
+    // const startRoom = await sfRouterContract.createRoom({ gasLimit: 1500000 })
+    // await startRoom.wait()
+
+    // const rmNum = await sfRouterContract.roomNumber()
+    // const finalNumber = rmNum.toString(10)
+
+    // console.log(rmNum)
+    // console.log(finalNumber)
+
+    // setVideoRoomId(finalNumber)
+    // setGlobalExternalNullifier(finalNumber)
+    // setReviewRoomId(finalNumber)
+
+    // const testNumber = 10
+    const userAddress = await signer.getAddress()
+    const body = {
+      id: 10,
+    }
+
+    fetch('https://emergence-dapp.herokuapp.com/open-meeting', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+
+    // Post Reuest
     // Set room Id
   }
 
@@ -137,7 +178,7 @@ function Controls({ switches }) {
     const fullProof = await generateProof(
       newIdentity,
       group,
-      localExternalNullifier,
+      globalExternalNullifier,
       signal,
       {
         zkeyFilePath:
@@ -201,9 +242,9 @@ function Controls({ switches }) {
       999,
       signalBytes32,
       globalNullifierHash,
-      1,
+      globalExternalNullifier,
       globalSolidityProof,
-      1,
+      videoRoomId,
       superFluidToken,
       { gasLimit: 1500000 },
     )
