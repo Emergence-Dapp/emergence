@@ -1,21 +1,22 @@
 import aws from 'aws-sdk';
 import axios from 'axios';
-var jwt = require('jsonwebtoken');
-var uuid4 = require('uuid4');
+import jwt from 'jsonwebtoken';
+import uuid4 from 'uuid4';
 
-var app_access_key = '62f6449dc16640065697182c';
-var app_secret = 'ojJPdgjgjI4DMT4btFGjGazgighCn4rBhiNh9XvpKgpW8ZP4aa7XGEtOF35OTzounnQDqekMiyXAfBXh1BfgQg1zGZR6HvKd4OdrnqP1u4Q2VVew6UbmaER9I9G1cssLb5mhNjeap8420nWP5TghtdjyD4t4wQ3EO8Z5JUGdQno=';
-
-const payload = {
-    access_key: app_access_key,
-    type: 'management',
-    version: 2,
-    iat: Math.floor(Date.now() / 1000),
-    nbf: Math.floor(Date.now() / 1000)
-};
 
 const getManagementKey = () => {
-    return Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
+        var app_access_key = '62f6449dc16640065697182c';
+        var app_secret = 'ojJPdgjgjI4DMT4btFGjGazgighCn4rBhiNh9XvpKgpW8ZP4aa7XGEtOF35OTzounnQDqekMiyXAfBXh1BfgQg1zGZR6HvKd4OdrnqP1u4Q2VVew6UbmaER9I9G1cssLb5mhNjeap8420nWP5TghtdjyD4t4wQ3EO8Z5JUGdQno=';
+
+        const payload = {
+            access_key: app_access_key,
+            type: 'management',
+            version: 2,
+            iat: Math.floor(Date.now() / 1000),
+            nbf: Math.floor(Date.now() / 1000)
+        };
+
         jwt.sign(
             payload,
             app_secret,
@@ -25,6 +26,9 @@ const getManagementKey = () => {
                 jwtid: uuid4()
             },
             function(err, token) {
+                if (err) {
+                    reject(err);
+                }
                 resolve(token);
             }
         );
@@ -70,7 +74,7 @@ export default async function handler(req, res) {
             };
 
             const resp = await axios.request(options);
-            // console.log({ data: resp.data });
+            console.log({ data: resp.data });
             return res.status(200).send('meeting started');
         } else if (type == 'session.close.success') {
             const authKey = await getManagementKey()
