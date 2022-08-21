@@ -56,7 +56,10 @@ contract SFRouter {
     uint256 externalNullifier, 
     uint256[8] calldata proof, 
     // bytes32 signedMessage, 
-    uint256 roomId) external { 
+    uint256 roomId,
+    ISuperfluidToken token,
+    address receiver
+    ) external { 
     
     //1.Call VerifyProof from Semaphore Contract
     semaContract.verifyProof(groupdId, signal, nullifierHash, externalNullifier, proof);
@@ -64,11 +67,13 @@ contract SFRouter {
     //2.Check if roomStatus is True
     require(roomStatus[roomId] == true);
 
-    //3.check if ExternalNullifier = roomId
+    //3.Check if ExternalNullifier = roomId
     require(externalNullifier == roomId);
 
     //4.Check if messaged Signer = BackendAddress
 
+    //5.Start flow
+    createFlowFromContract(token, receiver, 3858024691358020);
   }
 
   // ACCOUNT LIST: add & delete accounts
@@ -92,7 +97,7 @@ contract SFRouter {
   }
   
   // FROM CONTRACT: create, delete
-  function createFlowFromContract(ISuperfluidToken token, address receiver, int96 flowRate) external {
+  function createFlowFromContract(ISuperfluidToken token, address receiver, int96 flowRate) internal {
     // require(msg.sender == owner || daoMembers[msg.sender] == true, "must be authorized");
     cfaV1.createFlow(receiver, token, flowRate);
   }
