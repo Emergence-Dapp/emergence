@@ -257,31 +257,28 @@ function Controls({ switches }) {
       >
         Exit Meeting
       </button>
-
-      <button
-        className=" uppercase px-5 py-2 hover:bg-blue-600"
-        onClick={onHandleGenerateProof}
-      >
-        Generate Proof
-      </button>
-      {/* <button
-        className=" uppercase px-5 py-2 hover:bg-blue-600"
-        onClick={onHandleVerifyOnChain}
-      >
-        Verify On Chain
-      </button> */}
-      <button
-        className=" uppercase px-5 py-2 hover:bg-blue-600"
-        onClick={onHandleStartFlow}
-      >
-        Start Flow
-      </button>
       <button
         className=" uppercase px-5 py-2 hover:bg-blue-600"
         onClick={onHandleStartRoom}
       >
-        StartRoom
+        Open Room
       </button>
+      {globalSolidityProof ? (
+        <button
+          className=" uppercase px-5 py-2 hover:bg-blue-600"
+          onClick={onHandleStartFlow}
+        >
+          Start Flow
+        </button>
+      ) : (
+        <button
+          className=" uppercase px-5 py-2 hover:bg-blue-600"
+          onClick={onHandleGenerateProof}
+        >
+          Generate Proof
+        </button>
+      )}
+
       {/* <FlowingBalance /> */}
       {/* <button
             className=" uppercase px-5 py-2 hover:bg-blue-600"
