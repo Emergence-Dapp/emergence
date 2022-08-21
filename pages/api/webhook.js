@@ -1,9 +1,14 @@
-import AWS from 'aws-sdk';
+import aws from 'aws-sdk';
+
+aws.config.update({
+  accessKeyId: process.env.ACCESS_KEY,
+  secretAccessKey: process.env.SECRET_KEY,
+  region: 'us-east-2',
+  signatureVersion: 'v4',
+});
 
 export default async function handler(req, res) {
-    const accessKeyId = process.env.ACCESS_KEY;
-    const secretAccessKey = process.env.SECRET_KEY;
-    const s3Client = new AWS.S3(new AWS.Credentials({ accessKeyId, secretAccessKey }));
+    const s3Client = new AWS.S3();
 
     const saveTranscriptions = (data) => {
         return new Promise((resolve, reject) => {
