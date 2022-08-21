@@ -1,40 +1,36 @@
-import React from "react";
-import Controls from "./RoomControls.js/Controls";
+import React from 'react'
+import Controls from './RoomControls.js/Controls'
 import {
   useHMSActions,
   selectHMSMessages,
   useHMSStore,
   selectLocalPeer,
   selectPeers,
-} from "@100mslive/react-sdk";
+} from '@100mslive/react-sdk'
 
-import VideoTile from "./VideoTile";
-import VideoSpaces from "./VideoSpaces";
-import ScreenShare from "./ScreenShare";
+import VideoTile from './VideoTile'
 
-function Room({roomId}) {
-  const localPeer = useHMSStore(selectLocalPeer);
-  const stage = localPeer.roleName === "stage";
-  const viewer = localPeer.roleName === "viewer";
-  const peers = useHMSStore(selectPeers);
-  const hmsActions = useHMSActions();
-  const allMessages = useHMSStore(selectHMSMessages); // get all messages
+function Room({ roomId }) {
+  const localPeer = useHMSStore(selectLocalPeer)
+
+  const peers = useHMSStore(selectPeers)
+  const hmsActions = useHMSActions()
+  const allMessages = useHMSStore(selectHMSMessages) // get all messages
   // hmsActions.sendBroadcastMessage("hello"); // send a message
 
-  console.log(roomId);
-  const [inputValues, setInputValues] = React.useState("");
-  const [visible, isVisible] = React.useState(false);
+  console.log(roomId)
+  const [inputValues, setInputValues] = React.useState('')
+  const [visible, isVisible] = React.useState(false)
   const handleInputChange = (e) => {
-    setInputValues(e.target.value);
-  };
-
+    setInputValues(e.target.value)
+  }
 
   const sendMessage = () => {
-    hmsActions.sendBroadcastMessage(inputValues);
-    setInputValues("");
-  };
+    hmsActions.sendBroadcastMessage(inputValues)
+    setInputValues('')
+  }
 
-  const setVisibility =(dat)=>{
+  const setVisibility = (dat) => {
     isVisible(dat)
   }
   // let colsNumber=0;
@@ -43,43 +39,51 @@ function Room({roomId}) {
   // } else {
   //   colsNumber =1
   // }
- 
+
   return (
-    <div className=" relative h-screen flex justify-center items-center px-12 bg-slate-800 flex-row gap-8 overflow-hidden">
+    <div className=" relative h-screen flex justify-center items-center bg-slate-800 flex-row gap-4 overflow-hidden">
       <div className=" bg-slate-600 shadow-md w-3/5 rounded-2xl">
         <span className="flex flex-col w-full h-full">
           <div className={`flex justify-center items-center rounded-2xl`}>
-            {peers
-                  .map((peer) => {
-                    return (
-                      <>
-                      <VideoTile isLocal={false} peer={peer} />
-                      </>
-                    );
-                  })}
+            {peers.map((peer) => {
+              return (
+                <>
+                  <VideoTile isLocal={false} peer={peer} />
+                </>
+              )
+            })}
           </div>
-          <span className=" h-2/5 w-full flex flex-col gap-8 py-3 px-5">
-            <div className=" flex flex-row w-full gap-28">
-              <div className=" text-white w-3/5">
+          <span className=" h-2/5 w-full h-full flex flex-col gap-8 mt-3 px-3">
+            <div className="w-full">
+              <div className=" text-white">
                 <h3 className=" text-4xl font-black">Live</h3>
-                <h2 className=" text-2xl font-semibold">
-                  Live Conference meeting
-                </h2>
-                <span className="text-2xl mt-4">
-                  Welcome {localPeer && localPeer.name}
-                </span>
 
+                <div className="flex justify-between">
+                  <span className="text-2xl mt-4">
+                    Welcome {localPeer && localPeer.name}
+                  </span>
+                  <div className="flex flex-row gap-3 items-center bg-slate-500 p-3 rounded-md mr-20 font-semibold uppercase">
+                    <h3>Review Meeting</h3>
+                    <select className="text-black">
+                      <option value="1">1 STAR</option>
+                      <option value="2">2 STARS</option>
+                      <option value="3">3 STARS</option>
+                      <option value="4">4 STARS</option>
+                      <option value="5">5 STARS</option>
+                    </select>
+                    <button className="hover:bg-blue-600">Submit</button>
+                  </div>
+                </div>
               </div>
-
             </div>
-            <div className="w-max px-4 bg-slate-500 h-12 rounded-md z-20">
+            <div className="w-max px-1 mb-7 bg-slate-500 h-12 rounded-md z-20 flex justify-end">
               {/* Controls */}
               <Controls switches={setVisibility} />
             </div>
           </span>
         </span>
       </div>
-      <span className=" z-10 rounded-md w-1/4 h-5/6">
+      <span className=" z-10 rounded-md w-1/4 h-full py-4">
         <div className=" relative h-full w-full pb-20">
           {/* Chat interface */}
           <div className=" relative w-full h-full bg-slate-700 overflow-y-scroll">
@@ -114,9 +118,8 @@ function Room({roomId}) {
           </div>
         </div>
       </span>
-
     </div>
-  );
+  )
 }
 
-export default Room;
+export default Room
