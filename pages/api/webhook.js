@@ -73,8 +73,12 @@ export default async function handler(req, res) {
                 }
             };
 
-            const resp = await axios.request(options);
-            console.log({ data: resp.data });
+            try {
+                const resp = await axios.request(options);
+                console.log({ data: resp.data });
+            } catch (err) {
+                console.log('stopping beam failed')
+            }
             return res.status(200).send('meeting started');
         } else if (type == 'session.close.success') {
             const authKey = await getManagementKey()
@@ -91,8 +95,12 @@ export default async function handler(req, res) {
                 }
             };
 
-            const resp = await axios.request(options);
-            // console.log({ data: resp.data });
+            try {
+                const resp = await axios.request(options);
+                console.log({ data: resp.data });
+            } catch (err) {
+                console.log('stopping beam failed')
+            }
             return res.status(200).send('meeting stoped');
         } else if (type == 'beam.recording.success') {
             console.log({ location: data.location });
