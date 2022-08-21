@@ -1,5 +1,6 @@
 import React from "react";
 import {useState} from "react";
+import { FlowingBalance } from "../FlowingBalance";
 import {
   useHMSActions,
   useHMSStore,
@@ -238,6 +239,7 @@ function Controls({ switches }) {
           >
             StartRoom
           </button>
+          <FlowingBalance/>
           {/* <button
             className=" uppercase px-5 py-2 hover:bg-blue-600"
             onClick={onHandleCreateGroup}
