@@ -22,6 +22,7 @@ function Room({ roomId }) {
   const [inputValues, setInputValues] = React.useState('')
   const [visible, isVisible] = React.useState(false)
   const [reviewRoomId, setReviewRoomId] = React.useState()
+  const [flowStarted, setFlowStarted] = React.useState()
   const handleInputChange = (e) => {
     setInputValues(e.target.value)
   }
@@ -34,8 +35,9 @@ function Room({ roomId }) {
   const setVisibility = (dat) => {
     isVisible(dat)
   }
+  // Change Rating
   function onHandleSubmitReview() {
-    const finalNumber = 10
+    const finalNumber = reviewRoomId
     const body = {
       id: finalNumber,
       rating: 4,
@@ -57,7 +59,6 @@ function Room({ roomId }) {
 
   return (
     <div className=" relative h-screen flex justify-center items-center bg-slate-800 flex-row gap-4 overflow-hidden">
-      
       <div className=" bg-slate-600 shadow-md w-3/5 rounded-2xl">
         <span className="flex flex-col w-full h-full">
           <div className={`flex justify-center items-center rounded-2xl`}>
@@ -76,7 +77,8 @@ function Room({ roomId }) {
                 {/* <h2 className=" text-2xl font-semibold">
                   
                 </h2> */}
-                <Counter />
+                {flowStarted ? <Counter /> : <></>}
+
                 <div className="flex justify-between">
                   <span className="text-2xl mt-4">
                     Welcome {localPeer && localPeer.name}
@@ -84,11 +86,11 @@ function Room({ roomId }) {
                   <div className="flex flex-row gap-3 items-center bg-slate-500 p-3 rounded-md mr-20 font-semibold uppercase">
                     <h3>Review Meeting</h3>
                     <select className="text-black">
-                      <option value="1">1 STAR</option>
-                      <option value="2">2 STARS</option>
-                      <option value="3">3 STARS</option>
-                      <option value="4">4 STARS</option>
                       <option value="5">5 STARS</option>
+                      <option value="4">4 STARS</option>
+                      <option value="3">3 STARS</option>
+                      <option value="2">2 STARS</option>
+                      <option value="1">1 STAR</option>
                     </select>
                     <button
                       className="hover:bg-blue-600"
@@ -105,12 +107,13 @@ function Room({ roomId }) {
               <Controls
                 switches={setVisibility}
                 setReviewRoomId={setReviewRoomId}
+                setFlowStarted={setFlowStarted}
               />
             </div>
           </span>
         </span>
       </div>
-      <span className=" z-10 rounded-md w-1/4 h-full py-4">
+      <span className=" z-10 rounded-md w-1/4 h-3/4 py-4">
         <div className=" relative h-full w-full pb-20">
           {/* Chat interface */}
           <div className=" relative w-full h-full bg-slate-700 overflow-y-scroll">

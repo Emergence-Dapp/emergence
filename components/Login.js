@@ -4,7 +4,9 @@ import {
   useHMSActions,
   useHMSStore,
 } from '@100mslive/react-sdk'
+
 import Room from './Room'
+import Link from 'next/link'
 
 function Login({ roomId }) {
   const roomKeys = [
@@ -72,7 +74,11 @@ function Login({ roomId }) {
     <>
       {!isConnected ? (
         <div className=" h-screen flex justify-center items-center bg-slate-800">
-          <div className=" flex flex-col gap-6 mt-8">
+          <div className=" flex flex-col gap-6 -mt-20">
+            <h1 className="text-gray-200 max-w-lg text-2xl">
+              Atention! In the end of this meeting, a transcription of the
+              meeting will be generated, all participants will remain anonymous.
+            </h1>
             <input
               type="text"
               placeholder="Name"
@@ -86,6 +92,11 @@ function Login({ roomId }) {
             >
               Join Room
             </button>
+            <Link href="/">
+              <button className="flex-1 text-white  bg-rose-500 py-3 px-10 rounded-md">
+                Leave
+              </button>
+            </Link>
           </div>
         </div>
       ) : (
