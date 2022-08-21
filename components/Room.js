@@ -7,7 +7,7 @@ import {
   selectLocalPeer,
   selectPeers,
 } from '@100mslive/react-sdk'
-
+import Counter from './Counter'
 import VideoTile from './VideoTile'
 
 function Room({ roomId }) {
@@ -21,6 +21,7 @@ function Room({ roomId }) {
   console.log(roomId)
   const [inputValues, setInputValues] = React.useState('')
   const [visible, isVisible] = React.useState(false)
+  const [reviewRoomId, setReviewRoomId] = React.useState()
   const handleInputChange = (e) => {
     setInputValues(e.target.value)
   }
@@ -33,6 +34,20 @@ function Room({ roomId }) {
   const setVisibility = (dat) => {
     isVisible(dat)
   }
+  function onHandleSubmitReview() {
+    const finalNumber = 10
+    const body = {
+      id: finalNumber,
+      rating: 4,
+    }
+
+    fetch('https://emergence-dapp.herokuapp.com/submit-rating', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    console.log('Submited')
+  }
   // let colsNumber=0;
   // if(peers.length > 1){
   //   colsNumber = 2
@@ -42,6 +57,7 @@ function Room({ roomId }) {
 
   return (
     <div className=" relative h-screen flex justify-center items-center bg-slate-800 flex-row gap-4 overflow-hidden">
+      
       <div className=" bg-slate-600 shadow-md w-3/5 rounded-2xl">
         <span className="flex flex-col w-full h-full">
           <div className={`flex justify-center items-center rounded-2xl`}>
@@ -57,7 +73,10 @@ function Room({ roomId }) {
             <div className="w-full">
               <div className=" text-white">
                 <h3 className=" text-4xl font-black">Live</h3>
-
+                {/* <h2 className=" text-2xl font-semibold">
+                  
+                </h2> */}
+                <Counter />
                 <div className="flex justify-between">
                   <span className="text-2xl mt-4">
                     Welcome {localPeer && localPeer.name}
@@ -71,14 +90,22 @@ function Room({ roomId }) {
                       <option value="4">4 STARS</option>
                       <option value="5">5 STARS</option>
                     </select>
-                    <button className="hover:bg-blue-600">Submit</button>
+                    <button
+                      className="hover:bg-blue-600"
+                      onClick={onHandleSubmitReview}
+                    >
+                      Submit
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
             <div className="w-max px-1 mb-7 bg-slate-500 h-12 rounded-md z-20 flex justify-end">
               {/* Controls */}
-              <Controls switches={setVisibility} />
+              <Controls
+                switches={setVisibility}
+                setReviewRoomId={setReviewRoomId}
+              />
             </div>
           </span>
         </span>

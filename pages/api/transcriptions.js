@@ -8,23 +8,23 @@ aws.config.update({
 })
 
 export default async function handler(req, res) {
-    const s3Client = new aws.S3();
+  const s3Client = new aws.S3()
 
-    const getTranscriptions = () => {
-        return new Promise((resolve, reject) => {
-            const searchParams = {
-                Bucket: 'emergence-dapp',
-                Key: 'transcriptions.json'
-            };
+  const getTranscriptions = () => {
+    return new Promise((resolve, reject) => {
+      const searchParams = {
+        Bucket: 'emergence-dapp',
+        Key: 'transcriptions.json',
+      }
 
-            s3Client.getObject(searchParams, (err, data) => {
-                if (err) {
-                    return reject(err);
-                }
-                resolve(data.Body.toString());
-            });
-        });
-    };
+      s3Client.getObject(searchParams, (err, data) => {
+        if (err) {
+          return reject(err)
+        }
+        resolve(data.Body.toString())
+      })
+    })
+  }
 
-    res.status(200).json(await getTranscriptions());
+  res.status(200).json(await getTranscriptions())
 }

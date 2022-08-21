@@ -1,19 +1,20 @@
+
 import { Header } from "../../components/Header";
 import { RoomCard } from "../../components/RoomCard";
 import roomData from '../../data/rooms.json';
 import daoData from '../../data/daos.json';
 import { useRouter } from 'next/router';
 
-export default function RoomListPage() {
 
+export default function RoomListPage() {
+    
     const router = useRouter()
-    const { daoId } = router.query;
+    const { daoId } = router.query
+
     let daoName = "";
     try {
         daoName = daoData[daoData.findIndex(x => x.id == daoId)].name;
-    } catch {}
-
-    
+    } catch {}    
 
     return (
         <div>
@@ -28,7 +29,7 @@ export default function RoomListPage() {
                     return <RoomCard data={item} />
                 } ) }    
                 </div>   
-            </div>     
+            </div>   
         </div>
-    );
+  )
 }

@@ -1,3 +1,4 @@
+
 import aws from 'aws-sdk';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
@@ -33,15 +34,15 @@ const getManagementKey = () => {
             }
         );
     });
+
 }
 
-
-
 export default async function handler(req, res) {
-    const {
-        body: { type, data },
-        method
-    } = req
+  const {
+    body: { type, data },
+    method,
+  } = req
+
 
     console.log({ method, type, data });
     if (method == 'POST') {
@@ -105,7 +106,9 @@ export default async function handler(req, res) {
         } else if (type == 'beam.recording.success') {
             console.log({ location: data.location });
         }
-    }
 
-    res.status(200).send('nothing here');
+    }
+  }
+
+  res.status(200).send('nothing here')
 }
