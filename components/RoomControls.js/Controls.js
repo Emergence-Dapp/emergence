@@ -69,32 +69,35 @@ function Controls({ switches, setReviewRoomId, setFlowStarted }) {
   }
 
   const ExitRoom = async () => {
-    const userAddress = '0x60d7D6097E5b63A29358EB462E95078f0deD78bd'
-    // const roomNumber = 6
-    // const closeFlow = await sfRouterContract.closeRoom(
-    //   roomNumber,
-    //   SFRouterAddress,
-    //   userAddress,
-    //   4,
-    //   4,
-    //   {
-    //     gasLimit: 1500000,
-    //   },
-    // )
-    // await closeFlow.wait()
+    const superFluidToken = '0x91a6eCDe40B04dc49522446995916dCf491C37E4'
 
-    const body = {
-      id: videoRoomId,
-      daoMemberAddress: userAddress,
-    }
-
-    fetch('https://emergence-dapp.herokuapp.com/close-meeting', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
-    console.log('Closed')
+    const userAddress = await signer.getAddress()
+    const roomNumber = videoRoomId
+    const closeFlow = await sfRouterContract.closeRoom(
+      roomNumber,
+      superFluidToken,
+      userAddress,
+      4,
+      4,
+      {
+        gasLimit: 1500000,
+      },
+    )
     hmsActions.leave()
+    await closeFlow.wait()
+
+    // const body = {
+    //   id: videoRoomId,
+    //   daoMemberAddress: userAddress,
+    // }
+
+    // fetch('https://emergence-dapp.herokuapp.com/close-meeting', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(body),
+    // })
+
+    console.log('Closed')
   }
 
   // const permissions = useHMSStore(selectPermissions)
@@ -127,15 +130,15 @@ function Controls({ switches, setReviewRoomId, setFlowStarted }) {
     setGlobalExternalNullifier(finalNumber)
     setReviewRoomId(finalNumber)
 
-    const body = {
-      id: finalNumber,
-    }
+    // const body = {
+    //   id: finalNumber,
+    // }
 
-    fetch('https://emergence-dapp.herokuapp.com/open-meeting', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
+    // fetch('https://emergence-dapp.herokuapp.com/open-meeting', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(body),
+    // })
 
     // Post Reuest
     // Set room Id
