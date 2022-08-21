@@ -61,9 +61,6 @@ function Room({ roomId }) {
                 {/* <h2 className=" text-2xl font-semibold">
                   
                 </h2> */}
-                <span className="text-2xl mt-4">
-                  Welcome {localPeer && localPeer.name}
-                </span>
                 <Counter />
                 <div className="flex justify-between">
                   <span className="text-2xl mt-4">
