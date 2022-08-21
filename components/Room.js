@@ -58,8 +58,8 @@ function Room({ roomId }) {
   // }
 
   return (
-    <div className=" relative h-screen flex justify-center items-center bg-slate-800 flex-row gap-4 overflow-hidden">
-      <div className=" bg-slate-600 shadow-md w-3/5 rounded-2xl">
+    <div className=" relative h-screen flex justify-center items-center bg-brand-dark flex-row gap-4 overflow-hidden">
+      <div className=" bg-brand-med-dark shadow-md w-3/5 rounded-2xl">
         <span className="flex flex-col w-full h-full">
           <div className={`flex justify-center items-center rounded-2xl`}>
             {peers.map((peer) => {
@@ -83,7 +83,7 @@ function Room({ roomId }) {
                   <span className="text-2xl mt-4">
                     Welcome {localPeer && localPeer.name}
                   </span>
-                  <div className="flex flex-row gap-3 items-center bg-slate-500 p-3 rounded-md mr-20 font-semibold uppercase">
+                  <div className="flex flex-row gap-3 items-center bg-brand-dark p-3 rounded-md mr-20 font-semibold uppercase">
                     <h3>Review Meeting</h3>
                     <select className="text-black">
                       <option value="5">5 STARS</option>

@@ -32,7 +32,8 @@ function getTranscriptResult() {
 function postTranscriptForProcessing() {
     assembly
     .post("/transcript", {
-        audio_url: "https://bit.ly/3yxKEIY",
+        // audio_url: "https://bit.ly/3yxKEIY",
+        audio_url: "https://emergence-dapp.s3.us-east-2.amazonaws.com/Screen+Recording+2022-08-21+at+10.46.25.mov",
         // webhook_url: "",
         auto_highlights: true,
         iab_categories: true,
