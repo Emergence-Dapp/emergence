@@ -1,8 +1,24 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import fs from 'fs';
+import AWS from 'aws-sdk';
+export default async function handler(req, res) {
+    const accessKeyId = process.env.ACCESS_KEY;
+    const secretAccessKey = process.env.SECRET_KEY;
+    const s3Client = new AWS.S3(new AWS.Credentials({ accessKeyId, secretAccessKey }));
 
-export default function handler(req, res) {
-    // fs.writeFileSync('hola.json', JSON.stringify({ a: 'b'}));
-    const a = fs.readFileSync('hola.json');
-    res.status(200).json({ name: 'John Doe', a })
+    const getTranscriptions = () => {
+        return new Promise((resolve, reject) => {
+            const searchParams = {
+                Bucket: 'emergence-dapp',
+                Key: 'transcriptions.json'
+            };
+
+            s3Client.getObject(searchParams, (err, data) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(data.Body.toString());
+            });
+        });
+    };
+
+    res.status(200).json(await getTranscriptions());
 }
