@@ -93,7 +93,7 @@ function Room({ roomId }) {
                       <option value="1">1 STAR</option>
                     </select>
                     <button
-                      className="hover:bg-blue-600"
+                      className="hover:bg-brand-med-dark"
                       onClick={onHandleSubmitReview}
                     >
                       Submit
@@ -116,10 +116,10 @@ function Room({ roomId }) {
       <span className=" z-10 rounded-md w-1/4 h-3/4 py-4">
         <div className=" relative h-full w-full pb-20">
           {/* Chat interface */}
-          <div className=" relative w-full h-full bg-slate-700 overflow-y-scroll">
+          <div className=" relative w-full h-full bg-gray-700 overflow-y-scroll">
             {allMessages.map((msg) => (
               <div
-                className="flex flex-col gap-2 bg-slate-900 m-3 py-2 px-2 rounded-md"
+                className="flex flex-col gap-2 bg-gray-900 m-3 py-2 px-2 rounded-md"
                 key={msg.id}
               >
                 <span className="text-white text-2xl font-thin opacity-75">
@@ -130,7 +130,7 @@ function Room({ roomId }) {
               </div>
             ))}
           </div>
-          <div className=" absolute w-full rounded-2xl bottom-0 bg-slate-900 py-3 px-5 flex flex-row gap-4">
+          <div className=" absolute w-full rounded-2xl bottom-0 bg-brand-med-dark py-3 px-5 flex flex-row gap-4">
             <input
               type="text"
               placeholder="Write a Message"
@@ -140,7 +140,7 @@ function Room({ roomId }) {
               className=" focus:outline-none flex-1 px-2 py-3 rounded-md text-white bg-slate-900"
             />
             <button
-              className=" btn flex-1 text-white bg-blue-600 py-3 px-10 rounded-md"
+              className=" btn flex-1 text-white bg-brand-dark py-3 px-10 rounded-md"
               onClick={sendMessage}
             >
               Send
