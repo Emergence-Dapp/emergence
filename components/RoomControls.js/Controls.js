@@ -146,7 +146,8 @@ function Controls({ switches, setReviewRoomId, setFlowStarted }) {
 
   async function onHandleGenerateProof() {
     // Connect to Identity
-    const newIdentity = new Identity('signal message')
+    const signedMesssage = ''
+    const newIdentity = new Identity(signedMesssage)
     // const newTrapdoor = newIdentity.getTrapdoor();
     // const newNullifier = newIdentity.getNullifier();
     const newIdentityCommitment = newIdentity.generateCommitment()
