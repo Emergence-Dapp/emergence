@@ -1,8 +1,10 @@
 import { Header } from '../../components/Header'
 import axios from 'axios'
 import { useWalletConnectClient } from '../../contexts/ClientContext.jsx'
-import { useState } from 'react'
-import meetings from '../../data/meetings.json'
+import { useState, useEffect } from 'react'
+// import meetings from '../../data/meetings.json'
+import { Sessions } from '../../helpers/db'
+require('dotenv').config()
 
 const DATA_URL = 'https://emergence-gamma.vercel.app/api/transcriptions'
 
@@ -54,12 +56,24 @@ function postTranscriptForProcessing() {
 
 // postTranscriptForProcessing();
 
-export default function AdminPage({ meetingData }) {
+export default function AdminPage({ meetingData }) {    
 
     // const { connect, signer, accounts } = useWalletConnectClient();
     // console.log("checking signer", signer);
 
-    const [show, setShow] = useState();
+    const [show, setShow] = useState()
+    const [sessions, setSessions] = useState([])
+
+    const fetchSessions = async () => {        
+        const dbSessions = new Sessions()
+        const sessions = await dbSessions.getSessions()
+        setSessions(sessions)
+        console.log("sessions", sessions)
+    }
+
+    useEffect(() => {
+        fetchSessions()
+    }, []);
 
     return (
         <>
@@ -83,7 +97,7 @@ export default function AdminPage({ meetingData }) {
                             </tr>
                         </thead>
                         <tbody className="w-full">
-                        {meetings.map( (item, index) => {
+                        {sessions.map( (item, index) => {
                             return (                   
                             <tr className="h-20 text-sm leading-none text-gray-800 bg-white hover:bg-gray-100 border-b border-t border-gray-100">
                                 <td className="pl-4 cursor-pointer">
@@ -99,7 +113,7 @@ export default function AdminPage({ meetingData }) {
                                 </td>                                
                                 <td className="pl-12">
                                     <p className="font-medium">{item.purpose}</p>
-                                    <p className="text-xs leading-3 text-gray-600 mt-2">{item.secondaryPurpose}</p>
+                                    <p className="text-xs leading-3 text-gray-600 mt-2">{item.secondary_purpose}</p>
                                 </td>
                                 <td className="pl-12">
                                     <p className="text-sm font-medium leading-none text-gray-800">{item.rating}</p>
@@ -112,8 +126,8 @@ export default function AdminPage({ meetingData }) {
                                     <p className="text-xs leading-3 text-gray-600 mt-2">{item.denomination}</p>
                                 </td>
                                 <td className="pl-20">
-                                    <p className="font-medium">{item.date}</p>
-                                    <p className="text-xs leading-3 text-gray-600 mt-2">{item.duration}</p>
+                                    <p className="font-medium">{item.started_at}</p>
+                                    <p className="text-xs leading-3 text-gray-600 mt-2">{item.ended_at - item.started_at}</p>
                                 </td>
                                 <td className="pl-20">
                                     <p className="font-medium">{item.attendees}</p>

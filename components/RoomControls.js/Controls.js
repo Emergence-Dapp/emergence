@@ -261,25 +261,25 @@ function Controls({ switches, setReviewRoomId, setFlowStarted }) {
   return (
     <div className=" w-full h-full flex flex-row gap-2 justify-center items-center text-white font-semibold">
       <button
-        className=" uppercase px-5 py-2 hover:bg-blue-600"
+        className=" uppercase px-5 py-2 hover:bg-brand-med-dark"
         onClick={SwitchVideo}
       >
         {isLocalVideoEnabled ? 'Off Video' : 'On Video'}
       </button>
       <button
-        className=" uppercase px-5 py-2 hover:bg-blue-600"
+        className=" uppercase px-5 py-2 hover:bg-brand-med-dark"
         onClick={SwitchAudio}
       >
         {isLocalAudioEnabled ? 'Off Audio' : 'On Audio'}
       </button>
 
       {videoRoomId ? (
-        <button className=" uppercase px-5 py-2 hover:bg-blue-600">
+        <button className=" uppercase px-5 py-2 hover:bg-brand-med-dark">
           Room Id {videoRoomId}
         </button>
       ) : (
         <button
-          className=" uppercase px-5 py-2 hover:bg-blue-600"
+          className=" uppercase px-5 py-2 hover:bg-brand-med-dark"
           onClick={onHandleStartRoom}
         >
           Open Room
@@ -288,21 +288,21 @@ function Controls({ switches, setReviewRoomId, setFlowStarted }) {
 
       {globalSolidityProof ? (
         <button
-          className=" uppercase px-5 py-2 hover:bg-blue-600"
+          className=" uppercase px-5 py-2 hover:bg-brand-med-dark"
           onClick={onHandleStartFlow}
         >
           Start Flow
         </button>
       ) : (
         <button
-          className=" uppercase px-5 py-2 hover:bg-blue-600"
+          className=" uppercase px-5 py-2 hover:bg-brand-med-dark"
           onClick={onHandleGenerateProof}
         >
           Generate Proof
         </button>
       )}
       <button
-        className=" uppercase px-5 py-2 hover:bg-blue-600"
+        className=" uppercase px-5 py-2 hover:bg-brand-med-dark"
         onClick={ExitRoom}
       >
         Exit Meeting
